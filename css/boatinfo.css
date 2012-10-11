@@ -1,0 +1,39 @@
+#wrapper {
+	width: 900px;
+}
+
+#info {
+	width: 900px;
+}
+
+#list {
+	width: 900px;
+}
+
+label {
+	padding-left: 10px;
+	float: left;
+}
+
+input {
+	float: left;
+}
+
+th {
+	width: 30px;
+}
+
+ {
+	float: left;
+}
+
+#Vorheriger {
+	float: right;
+}
+#Nächster {
+	float: right;
+}
+
+#scrollable_table {
+	width: 100%;
+}

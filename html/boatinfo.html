@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+    	<link href="boatinfo.css" media="screen" rel="stylesheet" type="text/css"/> 
+    </head>
+    <body>
+        <h1>Logbuch</h1>
+        <div id="wrapper">
+            <form>
+                <div id="info">
+                	<table id="table1">
+                		<tr>
+                			<td><label for="bname">Bootsname</label></td>
+                			<td><input type="text" name="bname" id="bname" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="rnr">Registernummer</label></td>
+                			<td><input type="text" name="rnr" id="rnr" /><td>
+                		</tr>
+                		<tr>
+                			<td><label for="szeichen">Segelzeichen</label></td>
+                			<td><input type="text" name="szeichen" id="szeichen" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="hhafen">Heimathafen</label></td>
+                			<td><input type="text" name="hhafen" id="hhafen" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="yclub">Yachtclub</label></td>
+                			<td><input type="text" name="yclub" id="yclub" /><td>
+                		</tr>
+                		<tr>
+                			<td><label for="eigner">Eigner</label></td>
+                			<td><input type="text" name="eigner" id="eigner" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="vers">Versicherung</label></td>
+                			<td><input type="text" name="vers" id="vers" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="rzeichen">Rufzeichen</label></td>
+                			<td><input type="text" name="rzeichen" id="rzeichen" /></td>
+                		</tr>
+                	</table>
+                	<table id="table2">
+                		<tr>
+                			<td><label for="typ">Typ</label></td>
+                			<td><input type="text" name="typ" id="typ" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="konst">Konstrukteur</label></td>
+                			<td><input type="text" name="konst" id="konst" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="l">L&auml;nge</label></td>
+                			<td><input type="text" name="l" id="l" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="b">Breite</label></td>
+                			<td><input type="text" name="b" id="b" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="t">Tiefgang</label></td>
+                			<td><input type="text" name="t" id="t" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="mh">Masth&ouml;he</label></td>
+                			<td><input type="text" name="mh" id="mt" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="verdr">Verdr&auml;ngung</label></td>
+                			<td><input type="text" name="verd" id="verdr" /></td>
+                		</tr>
+                		<tr>
+                			<td><label for="riga">Rig-Art</label></td>
+                			<td><input type="text" name="riga" id="riga" /></td>
+                		</tr>
+                	</table>
+                	<table id="table3">
+                		<tr>
+                			<td><label for="bjahr">Baujahr</label>
+                			<td><input type="text" name="bjahr" id="bjahr" />
+                		</tr>
+                		<tr>
+                			<td><label for="motor">Motor</label>
+                			<td><input type="text" name="motor" id="motor" />
+                		</tr>
+                		<tr>
+                			<td><label for="tvol">Tankgr&ouml;&szlig;e</label>
+                			<td><input type="text" name="tvol" id="tvol" />
+                		</tr>
+                		<tr>
+                			<td><label for="wvol">Wassertankgr&ouml;&szlig;e</label>
+                			<td><input type="text" name="wvol" id="wvol" />
+                		</tr>
+                		<tr>
+                			<td><label for="avol">Abwassertankgr&ouml;&szlig;e</label>
+                			<td><input type="text" name="avol" id="avol" />
+                		</tr>
+                		<tr>
+                			<td><label for="gsgr">Gro&szlig;segelgr&ouml;&szlig;e</label>
+                			<td><input type="text" name="gsgr" id="gsgr" />
+                		</tr>
+                		<tr>
+                			<td><label for="gegr">Genuagr&ouml;&szlig;e</label>
+                			<td><input type="text" name="gegr" id="gegr" />
+                		</tr>
+                		<tr>
+                			<td><label for="spgr">Spigr&ouml;&szlig;e</label>
+                			<td><input type="text" name="spgr" id="spgr" />
+                		</tr>
+                	</table>    
+                </div>
+                <div id="list">
+                    <table id="scrollable_table">
+                        <thead>
+                            <tr>
+                                <th>Bootsname</th>
+                                <th>Bootstyp</th>
+                                <th>Konstruktor</th>
+                                <th>L&auml;nge</th>
+                                <th>Inhaber</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Xpresso</td>
+                                <td>X-99</td>
+                                <td>X-Yachts</td>
+                                <td>10</td>
+                                <td>HTWG Kosntanz<td>
+                                <td><img src="arrow.png" style="width:10">
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="buttons">
+                    <input type="reset" value="L&ouml;schen" />
+                    <input type="submit" name="submit" value="Speichern" />
+                    <input type="button" name="submit" value="Neuester" />
+                    <input type="button" id="Vorheriger" name="Vorheriger" value="Vorheriger" />
+                    <input type="button" id="Nächster" name="Nächster" value="N&auml;chster" />
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
