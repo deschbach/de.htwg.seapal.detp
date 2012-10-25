@@ -11,7 +11,33 @@
 			<div id="page" class="container">
 				<div id="content">
 					
-					<h2 class="title"><a name="legal">TODO</a></h2>
+					<?php
+					
+						$conn = mysql_connect("localhost","root","");
+						
+						$db_selected = mysql_select_db('SeaPal', $conn);
+						
+						if (!$db_selected) {
+							die ('Can\'t use foo : ' . mysql_error());
+						}
+						
+						$result = mysql_query("SELECT * FROM User",$conn);
+						
+						if (!$result) {
+							die('Invalid query: ' . mysql_error());
+						}
+						
+						$row = mysql_fetch_row($result);
+
+						echo $row[0];
+						echo $row[1];
+						echo $row[2];
+						echo $row[3];
+						echo $row[4];
+						
+						mysql_close($conn);
+						
+					?>
 					
 					<div style="clear: both;">
 						&nbsp;
