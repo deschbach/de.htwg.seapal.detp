@@ -5,6 +5,7 @@
 		$menu_title = "app";
 		$menu_id = 2;
 		include('header.php'); 
+		
 	?>
 	
 		<div id="wrapper">

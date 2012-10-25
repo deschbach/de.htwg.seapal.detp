@@ -4,7 +4,8 @@
 	<?php	
 		$menu_title = "contact";
 		$menu_id = 6;
-		include('header.php'); 
+		include('header.php');
+		  
 	?>
 	
 		<div id="wrapper">

@@ -1,4 +1,9 @@
 
+<?php 
+	//get current counter value
+	$hit_count = @file_get_contents('count.txt'); 
+?>
+
 <head profile='http://www.w3.org/2005/10/profile'>
 	<meta name='keywords' content='sailing, app, navigation, sea map, boat, skipper'/>
 	<meta name='description' content='SeaPal is a mobile app for sailors to do navigation, tracking and more.'/>

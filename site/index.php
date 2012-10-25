@@ -6,11 +6,13 @@
 		$menu_id = 1;
 		include('header.php'); 
 		
+		//update counter
+		$hit_count++;
 		
-		$hit_count = @file_get_contents('count.txt'); 
-		$hit_count++; 
-		@file_put_contents('count.txt', $hit_count); 
+		$ret = @file_put_contents('count.txt', $hit_count); 
 		
+		if ($ret == FALSE)
+			die('Could not write count.txt!');
 	?>
 
 		

@@ -70,6 +70,6 @@
 			</div>
 			<div id='footer'>
 				<p>&copy; 2012 IBN Verlag
-				<br>Besucher: <?php echo $hit_count; ?><br><br></p>
+				<br>Besucher: <?php echo $hit_count; ?></p>
 			</div>
 		</div>
