@@ -22,7 +22,9 @@
 							die ('Can\'t use foo : ' . mysql_error());
 						}
 						
-						$result = mysql_query("SELECT * FROM User",$conn);
+						$sql = "SELECT * FROM benutzer";
+						
+						$result = mysql_query($sql,$conn);
 						
 						if (!$result) {
 							die('Invalid query: ' . mysql_error());
@@ -35,6 +37,8 @@
 						echo $row[2];
 						echo $row[3];
 						echo $row[4];
+						echo $row[5];
+						echo $row[6];
 						
 						mysql_close($conn);
 						

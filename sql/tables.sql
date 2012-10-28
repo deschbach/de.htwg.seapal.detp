@@ -1,6 +1,6 @@
 /* table for users */
-CREATE TABLE benuzter (
-	bnr INTEGER NOT NULL,
+CREATE TABLE benutzer (
+	bnr INT NOT NULL,
 	benuztername VARCHAR(20) NOT NULL,
 	passwort VARCHAR(10) NOT NULL,
 	vorname VARCHAR(20) NOT NULL,
@@ -10,10 +10,12 @@ CREATE TABLE benuzter (
 	registrierung DATE NOT NULL
 )
 
+INSERT INTO benutzer VALUES(1, "dominic", "pwd", "Dominic", "Eschbach", "doeschba@htwg-konstanz.de", DATE("2012-07-04"), DATE("2012-10-03"));
+
 /* table for bootinformations */
 CREATE TABLE bootinfo (
 	bootname VARCHAR(30) NOT NULL,
-	registernummer INTEGER NOT NULL,
+	registernummer INT NOT NULL,
 	segelzeichen VARCHAR(5) NOT NULL,
 	heimathafen VARCHAR(30) DEFAULT NULL,
 	yachtclup VARCHAR(30) DEFAULT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE bootinfo (
 	masthoehe FLOAT NOT NULL,
 	verdraengung FLOAT NOT NULL,
 	rigart VARCHAR(10) DEFAULT NULL,
-	baujahr INTEGER NOT NULL,
+	baujahr INT NOT NULL,
 	motor VARCHAR(30) DEFAULT NULL,
 	tankgroesse FLOAT DEFAULT NULL,
 	wassertankgroesse FLOAT DEFAULT NULL,
