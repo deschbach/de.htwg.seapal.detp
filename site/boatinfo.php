@@ -1,36 +1,28 @@
 <!DOCTYPE HTML>
 
 <html>
-    <head>
-    	<link href="../css/boatinfo.css" media="screen" rel="stylesheet" type="text/css"/> 
-    	<link href="../css/tables.css" media="screen" rel="stylesheet" type="text/css"/> 
-    </head>
-    <body>
-    	<div class="container" id="header">
-    		<div id="logo">
-	    		<h1><a name="top"><img width="50" height="50" alt="Icon-Small-50" src="../pictures/seapal.png">    SeaPal </a></h1>
-			</div>
-		    <div id="menu">
-				<ul>
-				    <li class="current_page_item"><a href="index.php">Homepage</a></li>
-				    <li><a href="">User Guide</a></li>
-				    <li><a href="">Screenshots</a></li>
-				    <li><a href="">About</a></li>
-				    <li><a href="">Contact</a></li>
-			    </ul>
-			</div>
-		</div>
-		<h1 align="center" style="color: #CE92A6;">Logbuch</h1>
+    
+    <?php
+    	
+    	$menu_title = "app";
+		$menu_id = 2;
+		include('header.php'); 
+		
+		
+	?>
+	
 		<div id="wrapper" align="center">
             <form method="post" action="boatinfo_insert.php">
                 <div id="form_div" align="center">
                 	<table id="form_table" cellspacing="0px" cellpadding="5px">
+	                	<br>
                 		<thead>
 		                	<tr>
 			                	<th colspan="6" align="center">Boat Informations</th>
 		                	</tr>
 	                	</thead>
-                		<tr>
+	                	<tbody>
+	                	<tr>
                 			<td><label for="bootname">Bootsname</label></td>
                 			<td><input type="text" name="bootname" id="bootname"/></td>
                 			<td><label for="typ">Typ</label></td>
@@ -94,6 +86,7 @@
                 			<td><label for="spigroesse">Spigr&ouml;&szlig;e</label></td>
                 			<td><input type="text" name="spigroesse" id="spigroesse"/></td>
                 		</tr>
+	                	</tbody>
                 	</table>
                 </div>
                 <br>
@@ -108,10 +101,11 @@
                                 <th>L&auml;nge</th>
                                 <th>Inhaber</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         
-                        <tbody>
+                        <tbody class="selectable_tbody">
                             <tr>
                                 
                             <?php
@@ -124,7 +118,7 @@
 									die ('Can\'t use foo : ' . mysql_error());
 								}
 													
-								$sql = "SELECT bootname, typ, konstrukteur, laenge, eigner FROM bootinfo;";
+								$sql = "SELECT * FROM bootinfo;";
                                 
                                 $result = mysql_query($sql,$conn);
 						
@@ -132,17 +126,17 @@
 									die('Invalid query: ' . mysql_error());
 								}
 								
-								while ($row = mysql_fetch_row($result)) {
+								while ($row = mysql_fetch_array($result)) {
 								
 									echo("<tr>");
 									
-									echo("<td>$row[0]</td>");
-									echo("<td>$row[1]</td>");
-									echo("<td>$row[2]</td>");
-									echo("<td>$row[3]</td>");
-									echo("<td>$row[4]</td>");
-									echo("<td align='right'><a href=''><img src='../images/arrow.png' style='width:20px'></a></td>");
-									
+									echo("<td>" . $row['bootname'] . "</td>");
+									echo("<td>" . $row['typ'] . "</td>");
+									echo("<td>" . $row['konstrukteur'] . "</td>");
+									echo("<td>" . $row['laenge'] . "</td>");
+									echo("<td>" . $row['eigner'] . "</td>");
+									echo("<td><input type='button' name='" . $row['bootname'] . "' class='load' value='load'/></td>");
+									echo("<td align='right'><a href=''><img src='../images/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
 									echo("</tr>");
 									
 								}
@@ -166,6 +160,22 @@
                     <input type="button" id="previous" name="Vorheriger" value="Vorheriger" class="button"/>
                 <div>
             </form>
+            <br>
+            <br>
         </div>
+        
+        <?php include('footer.php'); ?>
+        
+        <script>
+    
+    	$('input.load').click(function()
+    	{	
+    		var url = "boatinfo_load.php?bootname=" + this.name;
+    		
+	    	$("#form_div").load(url);
+    	});
+    
+    	</script>
+    	
     </body>
 </html>

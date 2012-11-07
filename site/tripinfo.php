@@ -1,9 +1,14 @@
 <!DOCTYPE HTML>
 
 <html>
-    <head>
-    	<link href="..\css\tripinfo.css" media="screen" rel="stylesheet" type="text/css"/> 
-    </head>
+    <?php
+    	
+    	$menu_title = "app";
+		$menu_id = 2;
+		include('header.php'); 
+		
+		
+	?>
     <body>
 		<form>
 			<div class="outer_frame">
@@ -101,5 +106,6 @@
 				</div>
 			</div>
 		</form>
+		<?php include('footer.php'); ?>
 	</body>
 <html>

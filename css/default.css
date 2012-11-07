@@ -415,5 +415,11 @@ h2.column {
 }
 
 
+/* Specific Style */
+tbody.selectable_tbody tr:hover
+{
+	background-color: #DEE3E5;
+	color: #10202F;
+}
 
 
