@@ -56,6 +56,7 @@
 							<li class="first"><a href="boatinfo.php">Boatinfo</a></li>
 							<li><a href="tripinfo.php">Tripinfo</a></li>
 							<li><a href="waypoint.php">Waypoint</a></li>
+							<li><a href="map.html">Map</a></li>
 						</ul>
 					</div>
 				</div>
