@@ -10,11 +10,6 @@
 
 <title>SeaPal for iPad on the iTunes App Store</title>
 
-
-
-
-
-
 <script>
 if (!window.its) {
     window.its = {};

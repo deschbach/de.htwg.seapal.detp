@@ -17,8 +17,8 @@
 					<h2>Where to get SeaPal</h2>
 					<p>SeaPal is available in the following stores<br></p>
 					<ul class='list-style2'>
-						<li><a href='http://itunes.apple.com/us/app/seapal/id561903907?mt=8&amp;uo=4' target='itunes_store'><img src='../images/Icon-Small-50.png' alt='Icon-Small-50' height='50' width='50'> iPad App Store</a></li>
-						<li><img src='../images/Icon-Small-50.png' alt='Icon-Small-50' height='50' width='50'> iPhone App Store</li>
+						<li><a href='http://itunes.apple.com/us/app/seapal/id561903907?mt=8&amp;uo=4' target='itunes_store'><img src='../img/Icon-Small-50.png' alt='Icon-Small-50' height='50' width='50'> iPad App Store</a></li>
+						<li><img src='../img/Icon-Small-50.png' alt='Icon-Small-50' height='50' width='50'> iPhone App Store</li>
 					</ul>
 				</div>
 				

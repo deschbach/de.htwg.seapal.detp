@@ -23,7 +23,7 @@
 						<h2 class="title"><a name="welcome">Welcome to SeaPal </a></h2>
 						<div class="entry">
 							<p>
-								<img src="../images/SeaPal-Horiz02-620x200.jpg" alt="" height="200" width="620">
+								<img src="../img/SeaPal-Horiz02-620x200.jpg" alt="" height="200" width="620">
 							</p>
 							<p>
 								<b>SeaPal</b> is an App for sailors and other water sport fanatics that support the skipper in his tasks for navigation, route planing and logbook keeping. The central view shows a map with the current position and forward line. Waypoint and routes can easily be created, distances and courses can quickly be determined and documented in the logbook. The touch interface allows for fast and intuitive interaction.
@@ -50,7 +50,7 @@
 						<h2 class="title"><a name="overview">Function Overview</a></h2>
 						<div class="entry">
 							<p>
-								<img src="../images/SeaPal-Horiz03-620x200.jpg" alt="" height="200" width="620">
+								<img src="../img/SeaPal-Horiz03-620x200.jpg" alt="" height="200" width="620">
 							</p>
 							<p>
 								<b>SeaPal</b> offers the following functionality
@@ -107,7 +107,7 @@
 					<li>SeaPal in <a href="http://itunes.apple.com/us/app/seapal/id561903907?mt=8&amp;ign-mpt=uo%3D4">iTunes</a></li>
 					<li><a href="userguide.php">User Guide</a></li>
 					<li><a href="about.php">About the project</a></li>
-					<li><a href="images/Legend-IBN-Map.pdf">Legend of IBN Maps</a></li>
+					<li><a href="Legend-IBN-Map.pdf">Legend of IBN Maps</a></li>
 				</ul>
 			</div>
 		</div>

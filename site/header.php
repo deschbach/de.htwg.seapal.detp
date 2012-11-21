@@ -9,7 +9,7 @@
 	<meta name='description' content='SeaPal is a mobile app for sailors to do navigation, tracking and more.'/>
 	<meta http-equiv='content-type' content='text/html; charset=utf-8'/>
 	<title>SeaPal</title>
-	<link rel='icon' type='image/png' href='../images/Icon-Small-50.png'>
+	<link rel='icon' type='image/png' href='../img/Icon-Small-50.png'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'/>
 	<link href='../css/default.css' rel='stylesheet' type='text/css' media='screen'/>
 	
@@ -32,14 +32,14 @@
 	</script>
 	
 	<!-- JQuery -->
-	<script type="text/javascript" src="../jquery/jquery-1.8.2.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.8.2.js"></script>
 	
 </head>
 <body>
 	<div id='header-wrapper'>
 		<div id='header' class='container'>
 			<div id='logo'>
-				<h1><a name='top'><img src='../images/Icon-Small-50.png' alt='Icon-Small-50' width='50' height='50' />  <?php echo $menu_title; ?></a></h1>
+				<h1><a name='top'><img src='../img/Icon-Small-50.png' alt='Icon-Small-50' width='50' height='50' />  <?php echo $menu_title; ?></a></h1>
 			</div>
 			<div id='menu'>
 				<ul>
@@ -54,7 +54,7 @@
 		</div>
 		<div id='banner' class='container'>
 			<div class='image-style'>
-				<img src='../images/SeaPal-Screen-Horiz01.jpg' width='970' height='320' alt=''/>
+				<img src='../img/SeaPal-Screen-Horiz01.jpg' width='970' height='320' alt=''/>
 			</div>
 		</div>
 	</div>

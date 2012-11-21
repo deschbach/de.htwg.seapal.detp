@@ -8,8 +8,8 @@ function formatCoordinate(val, type) {
 
     value = value.replace(/\./, '\u00B0');
 
-    value = value.replace(/[°].*/, function (s) {
-        s = s.replace(/[°]/, '0.');
+    value = value.replace(/[\u00B0].*/, function (s) {
+        s = s.replace(/[\u00B0]/, '0.');
         s = parseFloat(s) * 60;
         s = s.toString();
         if (s.indexOf('.') == -1)
@@ -21,11 +21,11 @@ function formatCoordinate(val, type) {
         return '\u00B0' + s.substr(0, 5);
     });
 
-    if (!/[°]/.test(value)) {
+    if (!/[\u00B0]/.test(value)) {
         value = value + "\u00B000.00";
     }
 
-    value = value.replace(/.*[°]/, function (s) {
+    value = value.replace(/.*[\u00B0]/, function (s) {
         var negative = false;
         if (s.substr(0, 1) == '-') {
             s = s.substring(1);
