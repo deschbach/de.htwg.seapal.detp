@@ -1,7 +1,7 @@
 	<div id='header-wrapper'>
 		<div id='header' class='container'>
 			<div id='logo'>
-				<h1><a name='top'><img src='../img/Icon-Small-50.png' alt='Icon-Small-50' width='50' height='50' />  <?php echo $menu_title; ?></a></h1>
+				<h1><a name='top'><img src='../img/Icon-Small-50.png' alt='Icon-Small-50' width='40' height='40' />  <?php echo $menu_title; ?></a></h1>
 			</div>
 			<div id='menu'>
 				<ul>

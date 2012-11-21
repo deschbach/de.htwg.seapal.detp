@@ -13,9 +13,30 @@ body {
     color: black;
 }
 
+#app_left_title {
+	float: left;
+	font-size: 20px;
+}
+
+#app_right_title {
+	margin-left: 0;
+	margin-right: 20px;
+	float: right;
+	font-size: 20px;
+}
+
+#end {
+	margin-right: 20px;
+}
 
 label {
-	color: white;
+	color: #DEE3E5;
+	margin-left: 20px;
+}
+
+.app_links {
+	margin-left: 20px;
+	color: #DEE3E5;
 }
 
 #app_wrapper {
@@ -54,6 +75,7 @@ label {
     position: absolute;
     z-index: 2;
     white-space: nowrap;
+    background: #1B2024;
 }
 
 
@@ -128,15 +150,17 @@ hr {
 
 /* Header */
 
+/* Header */
+
 #header-wrapper {
 	overflow: hidden;
-	height: 157px;
+	height: 70px;
 	background: #DEE3E5;
 }
 
 #header {
 	width: 1000px;
-	height: 140px;
+	height: 70px;
 	margin: 0 auto;
 	padding: 0px 0px;
 }
@@ -146,20 +170,20 @@ hr {
 #logo {
 	float: left;
 	width: 350px;
-	height: 80px;
+	height: 70px;
 	margin: 0px;
 	padding: 0px;
 }
 
 #logo h1 {
-	padding: 30px 0px 0px 0px;
-	background: url(../img/img02.png) no-repeat left 50%;
+	padding-top: 10px;
 	text-transform: lowercase;
 	letter-spacing: -2px;
-	font-size: 3.6em;
+	font-size: 3.0em;
 }
 
 #logo h1 a {
+	padding-bottom: 5px;
 	text-decoration: none;
 	color: #1B2024;
 }
@@ -167,32 +191,33 @@ hr {
 /* Menu */
 
 #menu {
-	float: right;
-	width: 800px;
-	height: 80px;
+	float: left;
+	width: 650px;
+	height: 70px;
 }
 
 #menu ul {
-	float: right;
+	float: left;
 	margin: 0;
-	padding: 40px 0px 0px 0px;
+	padding: 0;
 	list-style: none;
 	line-height: normal;
 }
 
 #menu li {
 	float: left;
+	padding-top: 25px;
 }
 
 #menu a {
 	display: block;
 	margin-left: 1px;
-	padding: 5px 20px 5px 20px;
+	padding: 5px 15px 5px 15px;
 	text-decoration: none;
 	text-align: center;
 	text-transform: uppercase;
 	font-family: 'Oswald', sans-serif;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: 300;
 	color: #10202F;
 }
@@ -203,9 +228,6 @@ hr {
 	border-radius: 5px;
 	color: #FFFFFF;
 }
-
-/* Page */
-
 
 /* Banner Style */
 

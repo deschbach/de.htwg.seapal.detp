@@ -155,6 +155,8 @@ $(function () {
 
             } else if (key == "distance") {
 
+	            setDistance(temporaryMarker.position);
+
             } else if (key == "destination") {
 
             } else if (key == "delete") {
@@ -456,4 +458,45 @@ function deleteRoute() {
         routeMarkerArray[i - 1].setMap(null);
     }
     routeMarkerArray = new Array();
+}
+
+function saveRoute() {
+	alert('Save Route!')
+}
+
+function setDistance(position) {
+	
+	var distanceLabel = new Label({ map: map });
+	
+	distanceLabel.bindTo('position', temporaryMarker, 'position');
+	
+	var distance = new google.maps.Polyline({
+		path: [currentPositionMarker.position, temporaryMarker.position] ,
+		strokeColor: "#FFFF00",
+		strokeOpacity: .7,
+		strokeWeight: 3
+	});
+	distance.setMap(map);
+	
+	distanceLabel.set('text', getDistance( currentPositionMarker.position.lat(), currentPositionMarker.position.lng(), temporaryMarker.position.lat(), temporaryMarker.position.lng()));
+	
+	google.maps.event.addListener(temporaryMarker, 'drag', function() {
+		distance.setPath([temporaryMarker.position, currentPositionMarker.position]);
+		distanceLabel.set('text', getDistance( currentPositionMarker.position.lat(), currentPositionMarker.position.lng(), temporaryMarker.position.lat(), temporaryMarker.position.lng()));
+	});
+
+}
+
+function getDistance(lat1,lon1,lat2,lon2) {
+	var R = 6371; // km (change this constant to get miles)
+	var dLat = (lat2-lat1) * Math.PI / 180;
+	var dLon = (lon2-lon1) * Math.PI / 180; 
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+		Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) * 
+		Math.sin(dLon/2) * Math.sin(dLon/2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	var d = R * c;
+	if (d>1) return Math.round(d)+"km";
+	else if (d<=1) return Math.round(d*1000)+"m";
+	return d;
 }
