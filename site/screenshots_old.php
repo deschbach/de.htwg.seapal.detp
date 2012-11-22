@@ -22,7 +22,7 @@
 							<figure><img src="../img/SeaPal-Southampton-OSM.jpg" alt="SeaPal-Southampton-OSM" width="580" height="435"/><figcaption>Map view with OpenSeaMap showing Southampton.</figcaption></figure>
 							<figure><img src="../img/SeaPal-Konstanz-IBN.jpg" alt="SeaPal-Konstanz-IBN" width="580" height="435"/><figcaption>Offline map from IBN</figcaption></figure>
 							<figure><img src="../img/SeaPal-POI-Search.jpg" alt="SeaPal-POI-Search" width="435" height="580"><figcaption>Searching for Points of Interest</figcaption></figure>
-							<figure><img src="../img/SeaPal-POI-Harborinfo.jpg" alt="SeaPal-POI-Harborinfo" width="435" height="580"><figcaption>Points of Interest: Info for a Harbour</figcaption></figure>						 
+							<figure><img src="../img/SeaPal-POI-Harborinfo.jpg" alt="SeaPal-POI-Harborinfo" width="435" height="580"><figcaption>Points of Interest: Info for a Harbour</figcaption></figure						 
 						</div>
 					</div>
 					<div class="post">
@@ -70,7 +70,7 @@
 				<!-- end #content -->
 				<div id="sidebar">
 					<div id="box1">
-						<h2>Quick Access</h2>
+						<h2>Quick Accesss</h2>
 						<ul class="list-style1">
 							<li class="first"><a href="#ipad">iPad</a></li>
 							<li><a href="#tools">Tools</a></li>

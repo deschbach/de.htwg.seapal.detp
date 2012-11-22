@@ -136,7 +136,7 @@
 									echo("<td>" . $row['laenge'] . "</td>");
 									echo("<td>" . $row['eigner'] . "</td>");
 									echo("<td><input type='button' name='" . $row['bootname'] . "' class='load' value='load'/></td>");
-									echo("<td align='right'><a href=''><img src='../images/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
+									echo("<td align='right'><a href='tripinfo.php'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
 									echo("</tr>");
 									
 								}

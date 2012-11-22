@@ -114,14 +114,14 @@ function initialize() {
         maxZoom: 18
     }));
 
-    //map.overlayMapTypes.push(new google.maps.ImageMapType({
-    //    getTileUrl: function (coord, zoom) {
-    //        return "http://tiles.openseamap.org/seamark/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-    //    },
-    //    tileSize: new google.maps.Size(256, 256),
-    //    name: "OpenSeaMap",
-    //    maxZoom: 18
-    //}));
+    map.overlayMapTypes.push(new google.maps.ImageMapType({
+        getTileUrl: function (coord, zoom) {
+            return "http://tiles.openseamap.org/seamark/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+        },
+       tileSize: new google.maps.Size(256, 256),
+        name: "OpenSeaMap",
+        maxZoom: 18
+    }));
 
     // initialize header with current map center
     document.getElementById("lat").value = map.getCenter().lat();
@@ -228,8 +228,8 @@ $(function () {
             } else if (key == "addMarker") {
                 var position = selectedRouteMarker.reference.position;
                 var index;
-                for (var i = routeMarkerArray.length; i > 0; i--) {
-                    if (routeMarkerArray[i - 1].reference.position == position) {
+                for (var i = currentRoute.markerArray.length; i > 0; i--) {
+                    if (currentRoute.markerArray[i - 1].reference.position == position) {
                         index = i;
                         break;
                     }
