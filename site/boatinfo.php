@@ -164,8 +164,6 @@
             <br>
         </div>
         
-        <?php include('footer.php'); ?>
-        
         <script>
     
     	$('input.load').click(function()

@@ -36,5 +36,6 @@
     <div id="fixedMarkerContextMenu"></div>
     <div id="routeContextMenu"></div>
     <div id="distanceContextMenu"></div>
+    <div id="currentPositionContextMenu"></div>
 </body>
 </html>

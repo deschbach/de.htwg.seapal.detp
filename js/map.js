@@ -99,6 +99,10 @@ function initialize() {
     // initialize marker for current position
     currentPositionMarker = new google.maps.Marker(currentMarkerOptions);
     currentPositionMarker.setMap(map);
+    
+    google.maps.event.addListener(currentPositionMarker, 'click', function (event) {
+        $('#currentPositionContextMenu').contextMenu({ x: event.Ka.pageX, y: event.Ka.pageY });
+    });
 
     // set map types
     map.mapTypes.set("OSM", new google.maps.ImageMapType({
@@ -260,6 +264,27 @@ $(function () {
     });
 });
 
+// distance context menu ------------------------------------------------ //
+$(function () {
+    $.contextMenu({
+        selector: '#currentPositionContextMenu',
+        callback: function (key, options) {
+            if (key == "deleteMarker") {
+            	selectedDistanceMarker.distance.setMap(null);
+                selectedDistanceMarker.reference.setMap(null);
+                selectedDistanceMarker.infobox.setMap(null);
+                distanceMarkerArray.splice(distanceMarkerArray.indexOf(selectedDistanceMarker), 1);
+            } else if (key == "addMarker") {
+              
+            } 
+        },
+        items: {
+            "distance": { name: "Abstand von hier", icon: "distance" }
+        }
+    });
+});
+
+
 // helper functions --------------------------------------------------------- //
 
 // start marker timout
@@ -296,7 +321,7 @@ function drawFixedMarkerInfobox(latLng, counter) {
 function drawDistanceMarkerInfobox(latLng, distance) {
 
     customTxt = "<div><pre style=\"font-family: 'Open Sans Condensed'; sans-serif; font-size: 18px;\">"
-     + distance + "</pre></div>";
+     + distance + " m</pre></div>";
     return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -50);
 }
 
