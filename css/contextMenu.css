@@ -105,6 +105,7 @@
 .context-menu-item.icon-delete { background-image: url(../img/delete.png); }
 .context-menu-item.icon-addMarker { background-image: url(../img/add_marker.png); }
 .context-menu-item.icon-deleteMarker { background-image: url(../img/delete_marker.png); }
+.context-menu-item.icon-selectRoute { background-image: url(../img/select_route.png); }
 
 /* vertically align inside labels */
 .context-menu-input > label > * { vertical-align: top; }
