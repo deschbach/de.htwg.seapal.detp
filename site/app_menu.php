@@ -21,7 +21,6 @@
               <?php if ($submenu_id == 4) echo("class='selected_submenu_item'"); ?>><a href="app_waypoint.php">Wegpunkte</a>
             </li>
           </ul>
-          <div class="clearfix"></div>
         </div>
     </div>
 </div>

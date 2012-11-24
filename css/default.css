@@ -170,7 +170,7 @@ hr {
 #submenu {
     margin-left: 465px;
     height: 49px;
-    width: 383px;
+    width: 100%;
 }
 
     #submenu ul {
