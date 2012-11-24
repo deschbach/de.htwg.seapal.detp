@@ -2,8 +2,11 @@
 // andere Möglichkeit zur Routenbenennung überlegen
 // wozu lat/long anzeige? entfernen?
 // openseamap fehler beheben falls möglich
+// Benutzerposition bestimmen
 
 var map = null;
+
+var overlay = new google.maps.OverlayView();
 
 var MODE = { DEFAULT: { value: 0, name: "default" }, ROUTE: { value: 1, name: "route" } };
 var currentMode = MODE.DEFAULT;
@@ -92,7 +95,8 @@ function initialize() {
     currentPositionMarker.setMap(map);
 
     google.maps.event.addListener(currentPositionMarker, 'click', function (event) {
-        $('#currentPositionContextMenu').contextMenu({ x: event.Ka.pageX, y: event.Ka.pageY });
+        var pixel = fromLatLngToPixel(event.latLng);
+        $('#currentPositionContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
     });
 
     // set map types
@@ -124,6 +128,9 @@ function initialize() {
     //    document.getElementById("long").value = map.getCenter().lng();
     //});
 
+    overlay.draw = function () { };
+    overlay.setMap(map);
+
     // click on map
     google.maps.event.addListener(map, 'click', function (event) {
 
@@ -131,11 +138,7 @@ function initialize() {
         if (currentMode == MODE.DEFAULT) {
             setTemporaryMarker(event.latLng);
         } else if (currentMode == MODE.ROUTE) {
-            if (route == null) {
-                startNewRoute(event.latLng);
-            } else {
-                addRouteMarker(event.latLng);
-            }
+            addRouteMarker(event.latLng);
         }
     });
 }
@@ -336,7 +339,8 @@ function setTemporaryMarker(position) {
 
     // click on marker
     google.maps.event.addListener(temporaryMarker, 'click', function (event) {
-        $('#temporaryMarkerContextMenu').contextMenu({ x: event.Ka.pageX, y: event.Ka.pageY });
+        var pixel = fromLatLngToPixel(event.latLng);
+        $('#temporaryMarkerContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
         stopTimeout();
     });
 
@@ -380,7 +384,8 @@ function setFixedMarker(position) {
     // click on fixed marker
     google.maps.event.addListener(fixedMarker, 'click', function (event) {
         selectedMarker = getMarkerWithInfobox(event);
-        $('#fixedMarkerContextMenu').contextMenu({ x: event.Ka.pageX, y: event.Ka.pageY });
+        var pixel = fromLatLngToPixel(event.latLng);
+        $('#fixedMarkerContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
     });
 
     // marker is dragged
@@ -429,14 +434,15 @@ function setDistance(position) {
     // click on marker
     google.maps.event.addListener(distanceMarker, 'click', function (event) {
         selectedDistanceMarker = getDistanceMarkerWithInfobox(event);
-        $('#distanceContextMenu').contextMenu({ x: event.Ka.pageX, y: event.Ka.pageY });
+        var pixel = fromLatLngToPixel(event.latLng);
+        $('#distanceContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
     });
 
     google.maps.event.addListener(distanceMarker, 'drag', function (event) {
         selectedDistanceMarker = getDistanceMarkerWithInfobox(event);
         selectedDistanceMarker.distance.setPath([currentPositionMarker.position, selectedDistanceMarker.reference.position]);
         selectedDistanceMarker.infobox.setMap(null);
-        selectedDistanceMarker.infobox = drawDistanceMarkerInfobox(selectedDistanceMarker.reference.position, getDistance(currentPositionMarker.position,selectedDistanceMarker.reference.position));
+        selectedDistanceMarker.infobox = drawDistanceMarkerInfobox(selectedDistanceMarker.reference.position, getDistance(currentPositionMarker.position, selectedDistanceMarker.reference.position));
     });
 
     google.maps.event.addListener(currentPositionMarker, 'drag', function (event) {
@@ -457,10 +463,16 @@ function updateDistanceMarkers() {
         selectedDistanceMarker.infobox.setMap(null);
         selectedDistanceMarker.infobox = drawDistanceMarkerInfobox(selectedDistanceMarker.reference.position, getDistance(currentPositionMarker.position, selectedDistanceMarker.reference.position));
     }
-    return;
-
 }
 
 function getDistance(coord1, coord2) {
     return Math.round(google.maps.geometry.spherical.computeDistanceBetween(coord1, coord2));
+}
+
+function fromLatLngToPixel(latLng) {
+
+    var pixel = overlay.getProjection().fromLatLngToContainerPixel(latLng);
+    pixel.x += document.getElementById('map_canvas').offsetLeft;
+    pixel.y += document.getElementById('map_canvas').offsetTop;
+    return pixel;
 }
