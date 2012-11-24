@@ -3,7 +3,7 @@
                                 	$bootname = urldecode($_GET['bootname']);
                                 
                                 
-                                $conn = mysql_connect("localhost","root","");
+                                $conn = mysql_connect("localhost","root","root");
 						
                                 $db_selected = mysql_select_db('SeaPal', $conn);
 						
