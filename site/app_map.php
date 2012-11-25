@@ -11,24 +11,23 @@
 </head>
 <body onload="initialize()">
 
-	<div id="app_wrapper" align="center">
-		<div id="routeMenuContainer">
-			<div id="routeMenu">
-				<div id ="route_buttons">
-					<input type="button" value="Route l&ouml;schen" id="deleteRouteButton" class="routeButton" onclick="javascript: deleteRoute()" />
-					<input type="button" value="Route beenden" id="stopRouteButton" class="routeButton" onclick="javascript: stopRouteMode()" />
-					<input type="button" value="Route speichern" id="saveRouteButton" class="routeButton" onclick="javascript: saveRoute()"/>
-				</div>
-				<div id="route_distance">Routen-L&auml;nge: <span id="route_distance_number"></span>m</div>
-			</div>
-		</div>
-		<div id="map_canvas"></div>
-		<div id="temporaryMarkerContextMenu"></div>
-		<div id="fixedMarkerContextMenu"></div>
-		<div id="routeContextMenu_active"></div>
-		<div id="routeContextMenu_inactive"></div>
-		<div id="distanceContextMenu"></div>
-		<div id="currentPositionContextMenu"></div>
-	</div>
+    <div id="routeMenuContainer">
+        <div id="routeMenu">
+            <div id="route_buttons">
+                <input type="button" value="Route l&ouml;schen" id="deleteRouteButton" class="routeButton" onclick="javascript: deleteRoute()" />
+                <input type="button" value="Route beenden" id="stopRouteButton" class="routeButton" onclick="javascript: stopRouteMode()" />
+                <input type="button" value="Route speichern" id="saveRouteButton" class="routeButton" onclick="javascript: saveRoute()" />
+            </div>
+            <div id="route_distance">Routen-L&auml;nge: <span id="route_distance_number"></span>m</div>
+        </div>
+    </div>
+    <div id="map_canvas" align="center"></div>
+    <div id="temporaryMarkerContextMenu"></div>
+    <div id="fixedMarkerContextMenu"></div>
+    <div id="routeContextMenu_active"></div>
+    <div id="routeContextMenu_inactive"></div>
+    <div id="distanceContextMenu"></div>
+    <div id="currentPositionContextMenu"></div>
+
 </body>
 </html>
