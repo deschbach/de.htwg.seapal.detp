@@ -176,7 +176,7 @@ $(function () {
         items: {
             "marker": { name: "Markierung setzen", icon: "marker" },
             "startroute": { name: "Neue Route setzen", icon: "startroute" },
-            "distance": { name: "Abstand bis hier", icon: "distance" },
+            "distance": { name: "Distanz messen", icon: "distance" },
             "destination": { name: "Zum Ziel machen", icon: "destination" },
             "delete": { name: "L&ouml;schen", icon: "delete" },
         }
@@ -322,12 +322,6 @@ function setFixedMarker(position) {
     fixedMarker.setMap(map);
     fixedMarkerInfoBox = drawFixedMarkerInfobox(temporaryMarker.position, fixedMarkerCount);
     fixedMarkerArray.push(new MarkerWithInfobox(fixedMarker, fixedMarkerInfoBox, fixedMarkerCount));
-}
-
-
-function setCurrentPositionMarkerDefaults() {
-    google.maps.event.clearListeners(currentPositionMarker);
-    currentPositionMarker.setDraggable(true);
 }
 
 function getDistance(coord1, coord2) {
