@@ -28,9 +28,6 @@
 	                </thead>
 					<tbody class="appTableBody">
 						<?php
-                             
-                            if ($_GET['bnr'])
-                            	$bnr = urldecode($_GET['bnr']);
                             
                             $conn = mysql_connect("localhost","root","root");
 					
@@ -40,7 +37,7 @@
 								die ('Can\'t use foo : ' . mysql_error());
 							}
 												
-							$sql = "SELECT * FROM tripinfo WHERE bnr =" . $bnr . ";";
+							$sql = "SELECT * FROM tripinfo;";
                             
                             $result = mysql_query($sql,$conn);
 					
@@ -72,5 +69,14 @@
             <input type="submit" id="save" name="submit" value="Speichern" class="button"/>
 		</div>
 		</div>
+		<script>
+		
+			$("#bootSelect").change(function() {
+				
+				alert('Load routes for this boat.');
+				
+			});
+		
+		</script>
 	</body>
 <html>
