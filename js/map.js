@@ -233,7 +233,7 @@ function drawFixedMarkerInfobox(latLng, counter) {
 
     customTxt = "<div class='markerInfoBox'>"
      + "Markierung " + (counter) + "</div>";
-    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -50);
+    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -30);
 }
 
 function getMarkerWithInfobox(event) {
