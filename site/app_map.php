@@ -21,15 +21,21 @@
             <div id="route_distance">Routen-L&auml;nge: <span id="route_distance_number"></span>m</div>
         </div>
     </div>
+	<div id="distanceToolContainer">
+        <div id="distanceToolMenu">
+            <div id="distanceTool_buttons">
+                <input type="button" value="Distanzmessung beenden" id="stopDistanceToolButton" class="distanceToolbutton" onclick="javascript: stopDistanceToolMode()" />
+            </div>
+            <div id="distanceTool_distance">Distanz: <span id="distanceTool_number"></span>m</div>
+        </div>
+    </div>
     <div id="appWrapper">
-    	<div id="map_canvas" align="center"></div>
+    	<div id="map_canvas"></div>
     </div>
     <div id="temporaryMarkerContextMenu"></div>
     <div id="fixedMarkerContextMenu"></div>
     <div id="routeContextMenu_active"></div>
     <div id="routeContextMenu_inactive"></div>
-    <div id="distanceContextMenu"></div>
-    <div id="currentPositionContextMenu"></div>
 
 </body>
 </html>

@@ -4,20 +4,24 @@ var currentRoute = null;
 var draggedMarkerIndex = null;
 var selectedRouteMarker = null;
 
-var activePath = {
+var activePathOptions = {
     strokeOpacity: 1.0,
     strokeWeight: 3
 }
 
-var inactivePath = {
+var inactivePathOptions = {
     strokeOpacity: 0.5,
     strokeWeight: 2
 }
+var distanceToolOptions = {
+    strokeColor: "#FFFF00",
+    strokeOpacity: 0.7,
+    strokeWeight: 3
+}
 
-function Route(route, name) {
+function Route(route) {
     this.route = route;
     this.markerArray = new Array();
-    this.name = name;
     this.length = 0;
 }
 
@@ -54,11 +58,11 @@ $(function () {
             if (key == "selectRoute") {
                 if (currentRoute != null) {
                     toggleDraggable(currentRoute);
-                    currentRoute.route.setOptions(inactivePath);
+                    currentRoute.route.setOptions(inactivePathOptions);
                 }
                 currentRoute = getRouteByMarker(selectedRouteMarker);
                 currentMode = MODE.ROUTE;
-                currentRoute.route.setOptions(activePath);
+                currentRoute.route.setOptions(activePathOptions);
                 toggleDraggable(currentRoute);
                 updateRouteDistance();
                 document.getElementById('routeMenuContainer').style.display = "block";
@@ -70,16 +74,47 @@ $(function () {
     });
 });
 
-function addRouteMarker(position, index) {
+function addRouteMarker(position, index, isDistanceToolStartMarker) {
 
     var path = currentRoute.route.getPath();
+    var marker;
 
-    // set start marker at current position
-    var marker = new google.maps.Marker({
-        position: position,
-        map: map,
-        icon: routeMarkerImage,
-        draggable: true
+    if (isDistanceToolStartMarker) {
+        marker = currentPositionMarker;
+    } else {
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            icon: routeMarkerImage,
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'click', function (event) {
+            selectedRouteMarker = getRouteMarker(event.latLng);
+            var pixel = fromLatLngToPixel(event.latLng);
+            if (getRouteByMarker(selectedRouteMarker) == currentRoute) {
+                $('#routeContextMenu_active').contextMenu({ x: pixel.x, y: pixel.y });
+            } else {
+                $('#routeContextMenu_inactive').contextMenu({ x: pixel.x, y: pixel.y });
+            }
+        });
+    }
+
+    google.maps.event.addListener(marker, 'dragstart', function (event) {
+        selectedRouteMarker = getRouteMarker(event.latLng);
+        var path = currentRoute.route.getPath();
+        path.forEach(function (item, index) {
+            if (path.getAt(index) == selectedRouteMarker.position) {
+                draggedMarkerIndex = index;
+            }
+        });
+    });
+
+    google.maps.event.addListener(marker, 'drag', function (event) {
+        var path = currentRoute.route.getPath();
+        path.removeAt(draggedMarkerIndex);
+        path.insertAt(draggedMarkerIndex, selectedRouteMarker.position);
+        updateRouteDistance();
     });
 
     marker.setMap(map);
@@ -109,32 +144,6 @@ function addRouteMarker(position, index) {
 
     updateRouteDistance();
 
-    google.maps.event.addListener(marker, 'click', function (event) {
-        selectedRouteMarker = getRouteMarker(event.latLng);
-        var pixel = fromLatLngToPixel(event.latLng);
-        if (getRouteByMarker(selectedRouteMarker) == currentRoute) {
-            $('#routeContextMenu_active').contextMenu({ x: pixel.x, y: pixel.y });
-        } else {
-            $('#routeContextMenu_inactive').contextMenu({ x: pixel.x, y: pixel.y });
-        }
-    });
-
-    google.maps.event.addListener(marker, 'dragstart', function (event) {
-        selectedRouteMarker = getRouteMarker(event.latLng);
-        var path = currentRoute.route.getPath();
-        path.forEach(function (item, index) {
-            if (path.getAt(index) == selectedRouteMarker.position) {
-                draggedMarkerIndex = index;
-            }
-        });
-    });
-
-    google.maps.event.addListener(marker, 'drag', function (event) {
-        var path = currentRoute.route.getPath();
-        path.removeAt(draggedMarkerIndex);
-        path.insertAt(draggedMarkerIndex, selectedRouteMarker.position);
-        updateRouteDistance();
-    });
 }
 
 // removes selected route marker
@@ -163,34 +172,54 @@ function updateRouteDistance() {
         currentRoute.length += getDistance(currentRoute.markerArray[i].position, currentRoute.markerArray[i + 1].position);
     }
 
-    document.getElementById("route_distance_number").innerHTML = currentRoute.length;
+    if (currentMode == MODE.DISTANCE) {
+        document.getElementById("distanceTool_number").innerHTML = currentRoute.length;
+    } else {
+        document.getElementById("route_distance_number").innerHTML = currentRoute.length;
+    }
 }
 
-function startNewRoute(position) {
+function startNewRoute(position, isDistanceToolRoute) {
 
-    currentMode = MODE.ROUTE;
+    var route;
 
-    document.getElementById('routeMenuContainer').style.display = "block";
+    if (isDistanceToolRoute) {
+        route = new google.maps.Polyline(distanceToolOptions);
+        document.getElementById('distanceToolContainer').style.display = "block";
+        currentMode = MODE.DISTANCE;
+    } else {
+        route = new google.maps.Polyline(activePathOptions);
+        document.getElementById('routeMenuContainer').style.display = "block";
+        currentMode = MODE.ROUTE;
+    }
 
     // delete temp marker & infobox
     if (temporaryMarker != null) { temporaryMarker.setMap(null); }
     if (temporaryMarkerInfobox != null) { temporaryMarkerInfobox.setMap(null); }
 
     // initialize new route
-    var route = new google.maps.Polyline(activePath);
-    currentRoute = new Route(route, 'Route' + (routeArray.length + 1));
-    routeArray.push(currentRoute);
+    currentRoute = new Route(route);
     route.setMap(map);
-
+    routeArray.push(currentRoute);
+    if (currentMode == MODE.DISTANCE) {
+        addRouteMarker(currentPositionMarker.position, null, true);
+    }
     addRouteMarker(position);
 }
 
 function stopRouteMode() {
     currentMode = MODE.DEFAULT;
-    currentRoute.route.setOptions(inactivePath);
+    currentRoute.route.setOptions(inactivePathOptions);
     toggleDraggable(currentRoute);
     currentRoute = null;
     document.getElementById('routeMenuContainer').style.display = "none";
+    document.getElementById('distanceToolContainer').style.display = "none";
+
+}
+
+function stopDistanceToolMode() {
+    deleteRoute();
+    setCurrentPositionMarkerDefaults();
 }
 
 function deleteRoute() {
@@ -198,6 +227,9 @@ function deleteRoute() {
     currentRoute.route.setMap(null);
 
     for (var i = 0; i < currentRoute.markerArray.length; i++) {
+        if (i == 0 && currentMode == MODE.DISTANCE) {
+            continue;
+        }
         currentRoute.markerArray[i].setMap(null);
     }
     routeArray.splice(routeArray.indexOf(currentRoute), 1);

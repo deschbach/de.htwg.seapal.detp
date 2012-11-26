@@ -8,15 +8,9 @@ var map = null;
 
 var overlay = new google.maps.OverlayView();
 
-var MODE = { DEFAULT: { value: 0, name: "default" }, ROUTE: { value: 1, name: "route" } };
+var MODE = { DEFAULT: { value: 0, name: "default" }, ROUTE: { value: 1, name: "route" }, DISTANCE: { value: 2, name: "distance" } };
 var currentMode = MODE.DEFAULT;
 
-var distance = null;
-var distanceMarker = null;
-var distanceMarkerInfobox = null;
-var distanceMarkerArray = new Array();
-
-var currentPosition = null;
 var currentPositionMarker = null;
 
 var temporaryMarker = null;
@@ -29,7 +23,6 @@ var fixedMarkerCount = 0;
 var fixedMarkerArray = new Array();
 
 var selectedMarker = null;
-var selectedDistanceMarker = null;
 
 var currentPositionMarkerImage = new google.maps.MarkerImage('../img/boot.png',
     new google.maps.Size(51, 48), //size
@@ -55,6 +48,11 @@ var routeMarkerImage = new google.maps.MarkerImage('../img/route_flag.png',
     new google.maps.Point(0, 30)  //offset point
 );
 
+function MarkerWithInfobox(marker, infobox, counter) {
+    this.reference = marker;
+    this.infobox = infobox;
+    this.counter = counter;
+}
 
 // initialize map and all event listeners
 function initialize() {
@@ -76,6 +74,9 @@ function initialize() {
     document.getElementById('routeMenuContainer').style.width = document.getElementById('routeMenu').offsetWidth + "px";
     document.getElementById('routeMenuContainer').style.top = "0px";
     document.getElementById('routeMenuContainer').style.display = "none";
+    document.getElementById('distanceToolContainer').style.width = document.getElementById('distanceToolMenu').offsetWidth + "px";
+    document.getElementById('distanceToolContainer').style.top = "0px";
+    document.getElementById('distanceToolContainer').style.display = "none";
 
     // initialize map
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
@@ -137,7 +138,7 @@ function initialize() {
         // handler for default mode
         if (currentMode == MODE.DEFAULT) {
             setTemporaryMarker(event.latLng);
-        } else if (currentMode == MODE.ROUTE) {
+        } else if (currentMode == MODE.ROUTE || currentMode == MODE.DISTANCE) {
             addRouteMarker(event.latLng);
         }
     });
@@ -163,7 +164,7 @@ $(function () {
 
             } else if (key == "distance") {
 
-                setDistance(temporaryMarker.position);
+                startNewRoute(temporaryMarker.position, true);
 
             } else if (key == "destination") {
 
@@ -202,47 +203,6 @@ $(function () {
     });
 });
 
-// distance context menu ------------------------------------------------ //
-$(function () {
-    $.contextMenu({
-        selector: '#distanceContextMenu',
-        callback: function (key, options) {
-            if (key == "deleteMarker") {
-                selectedDistanceMarker.distance.setMap(null);
-                selectedDistanceMarker.reference.setMap(null);
-                selectedDistanceMarker.infobox.setMap(null);
-                distanceMarkerArray.splice(distanceMarkerArray.indexOf(selectedDistanceMarker), 1);
-            } else if (key == "addMarker") {
-
-            }
-        },
-        items: {
-            "deleteMarker": { name: "Distanz l&ouml;schen", icon: "deleteMarker" }
-        }
-    });
-});
-
-// distance context menu ------------------------------------------------ //
-$(function () {
-    $.contextMenu({
-        selector: '#currentPositionContextMenu',
-        callback: function (key, options) {
-            if (key == "deleteMarker") {
-                selectedDistanceMarker.distance.setMap(null);
-                selectedDistanceMarker.reference.setMap(null);
-                selectedDistanceMarker.infobox.setMap(null);
-                distanceMarkerArray.splice(distanceMarkerArray.indexOf(selectedDistanceMarker), 1);
-            } else if (key == "addMarker") {
-
-            }
-        },
-        items: {
-            "distance": { name: "Abstand von hier", icon: "distance" }
-        }
-    });
-});
-
-
 // helper functions --------------------------------------------------------- //
 
 // start marker timout
@@ -261,33 +221,18 @@ function stopTimeout() {
 
 // draw temporaryMarkerInfobox 
 function drawTemporaryMarkerInfobox(latLng) {
-    customTxt = "<div><pre style=\"font-family: 'Open Sans Condensed'; sans-serif; font-size: 18px;\">"
+    customTxt = "<div class='markerInfoBox'>"
      + formatCoordinate(latLng.lat(), "lat") + " "
-     + formatCoordinate(latLng.lng(), "long") + "</pre></div>";
-    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, -110, -85);
+     + formatCoordinate(latLng.lng(), "long")
+     + "</br>DTM " + getDistance(latLng, currentPositionMarker.position) + "m</div>";
+    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, -110, -60);
 }
 
 // draw fixedMarkerInfobox 
 function drawFixedMarkerInfobox(latLng, counter) {
 
-    customTxt = "<div><pre style=\"font-family: 'Open Sans Condensed'; sans-serif; font-size: 18px;\">"
-     + "Markierung " + (counter) + "</pre></div>";
-    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -50);
-}
-
-// draw fixedMarkerInfobox 
-function drawDistanceMarkerInfobox(latLng, distance) {
-
-    customTxt = "<div><pre style=\"font-family: 'Open Sans Condensed'; sans-serif; font-size: 18px;\">"
-     + distance + " m</pre></div>";
-    return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -50);
-}
-
-// draw fixedMarkerInfobox 
-function drawRouteMarkerInfobox(latLng, distance) {
-
-    customTxt = "<div><pre style=\"font-family: 'Open Sans Condensed'; sans-serif; font-size: 18px;\">"
-     + distance + " m</pre></div>";
+    customTxt = "<div class='markerInfoBox'>"
+     + "Markierung " + (counter) + "</div>";
     return new TxtOverlay(latLng, customTxt, "coordinate_info_box", map, 30, -50);
 }
 
@@ -298,27 +243,6 @@ function getMarkerWithInfobox(event) {
             return fixedMarkerArray[i];
         }
     }
-}
-
-function getDistanceMarkerWithInfobox(event) {
-
-    for (var i = 0; i < distanceMarkerArray.length; i++) {
-        if (distanceMarkerArray[i].reference.position == event.latLng) {
-            return distanceMarkerArray[i];
-        }
-    }
-}
-
-function MarkerWithInfobox(marker, infobox, counter) {
-    this.reference = marker;
-    this.infobox = infobox;
-    this.counter = counter;
-}
-
-function DistanceMarkerWithInfobox(marker, infobox, distance) {
-    this.reference = marker;
-    this.infobox = infobox;
-    this.distance = distance;
 }
 
 function setTemporaryMarker(position) {
@@ -400,69 +324,10 @@ function setFixedMarker(position) {
     fixedMarkerArray.push(new MarkerWithInfobox(fixedMarker, fixedMarkerInfoBox, fixedMarkerCount));
 }
 
-function setDistance(position) {
 
-    temporaryMarker.setMap(null);
-    temporaryMarkerInfobox.setMap(null);
-    stopTimeout();
-
-    var distanceMarkerOptions = {
-        position: position,
-        map: map,
-        title: 'Distanz',
-        icon: fixedMarkerImage,
-        draggable: true
-    }
-
-    distanceMarker = new google.maps.Marker(distanceMarkerOptions);
-
-    distance = new google.maps.Polyline({
-        path: [currentPositionMarker.position, distanceMarker.position],
-        strokeColor: "#FFFF00",
-        strokeOpacity: .7,
-        strokeWeight: 3
-    });
-
-    distance.setMap(map);
-    distanceMarker.setMap(map);
-
-    distanceMarkerInfobox = drawDistanceMarkerInfobox(distanceMarker.position, getDistance(currentPositionMarker.position, distanceMarker.position));
-    distanceMarkerInfobox.setMap(map);
-
-    distanceMarkerArray.push(new DistanceMarkerWithInfobox(distanceMarker, distanceMarkerInfobox, distance));
-
-    // click on marker
-    google.maps.event.addListener(distanceMarker, 'click', function (event) {
-        selectedDistanceMarker = getDistanceMarkerWithInfobox(event);
-        var pixel = fromLatLngToPixel(event.latLng);
-        $('#distanceContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
-    });
-
-    google.maps.event.addListener(distanceMarker, 'drag', function (event) {
-        selectedDistanceMarker = getDistanceMarkerWithInfobox(event);
-        selectedDistanceMarker.distance.setPath([currentPositionMarker.position, selectedDistanceMarker.reference.position]);
-        selectedDistanceMarker.infobox.setMap(null);
-        selectedDistanceMarker.infobox = drawDistanceMarkerInfobox(selectedDistanceMarker.reference.position, getDistance(currentPositionMarker.position, selectedDistanceMarker.reference.position));
-    });
-
-    google.maps.event.addListener(currentPositionMarker, 'drag', function (event) {
-        updateDistanceMarkers();
-    });
-}
-
-function updateDistanceMarkers() {
-
-    if (distanceMarkerArray.length == 0) {
-        return;
-    }
-
-    for (var i = 0; i < distanceMarkerArray.length; i++) {
-
-        selectedDistanceMarker = distanceMarkerArray[i];
-        selectedDistanceMarker.distance.setPath([currentPositionMarker.position, selectedDistanceMarker.reference.position]);
-        selectedDistanceMarker.infobox.setMap(null);
-        selectedDistanceMarker.infobox = drawDistanceMarkerInfobox(selectedDistanceMarker.reference.position, getDistance(currentPositionMarker.position, selectedDistanceMarker.reference.position));
-    }
+function setCurrentPositionMarkerDefaults() {
+    google.maps.event.clearListeners(currentPositionMarker);
+    currentPositionMarker.setDraggable(true);
 }
 
 function getDistance(coord1, coord2) {

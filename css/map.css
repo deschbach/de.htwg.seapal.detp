@@ -54,23 +54,29 @@ label {
     font-weight: bold;
 }
 
-#routeMenuContainer {
+#routeMenuContainer, #distanceToolContainer {
     position: relative;
     margin-right: auto;
     margin-left: auto;
 }
 
-#routeMenu {
+#routeMenu, #distanceToolMenu {
     position: absolute;
     z-index: 2;
     white-space: nowrap;
     text-align: center;
 }
 
-#route_buttons {
+#route_buttons, #distanceTool_buttons {
     background: #1B2024;
 }
 
-#route_distance {
+#route_distance, #distanceTool_distance {
     font-weight: bolder;
+}
+
+.markerInfoBox {
+    font-family: 'Open Sans Condensed' sans-serif;
+    font-size: 18px;
+    white-space: nowrap;
 }
