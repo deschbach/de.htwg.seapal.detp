@@ -21,7 +21,9 @@
             <div id="route_distance">Routen-L&auml;nge: <span id="route_distance_number"></span>m</div>
         </div>
     </div>
-    <div id="map_canvas" align="center"></div>
+    <div id="appWrapper">
+    	<div id="map_canvas" align="center"></div>
+    </div>
     <div id="temporaryMarkerContextMenu"></div>
     <div id="fixedMarkerContextMenu"></div>
     <div id="routeContextMenu_active"></div>

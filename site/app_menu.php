@@ -15,7 +15,7 @@
               <?php if ($submenu_id == 2) echo("class='selected_submenu_item'"); ?>><a href="app_boatinfo.php">Logbuch</a>
             </li>
             <li
-              <?php if ($submenu_id == 3) echo("class='selected_submenu_item'"); ?>><a href="app_tripinfo.php">Routen</a>
+              <?php if ($submenu_id == 3) echo("class='selected_submenu_item'"); ?>><a href="app_trip.php">Routen</a>
             </li>
             <li
               <?php if ($submenu_id == 4) echo("class='selected_submenu_item'"); ?>><a href="app_waypoint.php">Wegpunkte</a>

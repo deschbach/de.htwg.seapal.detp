@@ -4,12 +4,15 @@
 		$menu_id = 2;
 		$submenu_id = 4;
 		include('header.php');
+		include('app_map_header.php');
         include('app_menu.php');
 	?>
-
-<form method="post" action="apply-now.php">
-    <input name="subject" type="hidden" value="Class" />
-    <fieldset>
+<body onload="initialize()" style="overflow: none;">
+<div id="appWrapper" align="center">
+		<br>
+    		<h2>Wegpunkte</h2>
+    		<br>
+    <div>
         <label for="webpunktname">Name</label>
         <input type="text" name="wegpunktname" style="width: 300px;" />
         <br />
@@ -78,5 +81,57 @@
             <option value="grosssegel2">reef 1</option>
             <option value="grosssegel3">reef 2</option>
         </select>
-    </fieldset>
-</form>
+    </div>
+    <br>
+    <br>
+    <div id="appInfoDiv">
+	    <div class="appInfoSection" id="notes">
+	    	<h2>NOTES</h2>
+		</div>
+		<div class="appInfoSection" id="appInfoMap">
+		</div>
+		<div class="appInfoSection" id="photos">
+			<h2>PHOTOS</h2>	
+		</div>
+	</div>
+</div>
+</body>
+<script>
+	
+	function initialize() {
+
+	    // set different map types
+	    var mapTypeIds = ["roadmap", "satellite", "OSM"];
+	
+	    // set map Options
+	    var mapOptions = {
+	        center: new google.maps.LatLng(47.66, 9.16),
+	        zoom: 14,
+	        mapTypeId: google.maps.MapTypeId.ROADMAP,
+	        mapTypeControlOptions: {
+	            mapTypeIds: mapTypeIds
+	        }
+	    };
+	
+	    // initialize map
+	    map = new google.maps.Map(document.getElementById("appInfoMap"), mapOptions);
+	
+	    // set client position
+	    currentPosition = new google.maps.LatLng(47.66, 9.16)
+	
+	    var currentMarkerOptions = {
+	        position: currentPosition,
+	        map: map,
+	        icon: currentPositionMarkerImage,
+	        draggable: true
+	    }
+	
+	    // initialize marker for current position
+	    currentPositionMarker = new google.maps.Marker(currentMarkerOptions);
+	    currentPositionMarker.setMap(map);
+
+	}
+
+
+</script>
+</html>
