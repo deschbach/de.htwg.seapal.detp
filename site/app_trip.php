@@ -13,6 +13,75 @@
 			<br>
 			<h2>Routen</h2>
 			<br>
+			
+			<div class="appInputDiv">
+				<table>
+					<thead>
+					<tr>
+						<td>Trip title</td>
+						<td colspan="4"><input type="text" name="titel" id="titel" size="50%"/></td>
+					</tr>
+					</thead>
+					<tbody>
+                    <tr>
+						<td>Von</td>
+						<td><input type="text" name="von" id="von"/><td/>
+						<td>Crew</td>
+						<td rowspan="3"><textarea cols="20" rows="3" id="crew"></textarea></td>
+						<td>Start</td>
+						<td><input type="text" name="tstart" id="tstart"/></td>
+                    </tr>
+					<tr>
+						<td>Nach</td>
+						<td><input type="text" name="nach" id="nach"/></td><td></td><td></td>
+						<td>Ende</td>
+						<td><input type="text" name="tende" id="tende"/></td>
+						<td>Motor(min)</td>
+						<td><input type="text" name="motor" id="motor"/></td>
+					</tr>
+					<tr>
+						<td>Skipper</td>
+						<td><input type="text" name="skipper" id="skipper"/>
+						</td><td></td><td></td>
+						<td>Dauer</td>
+						<td><input type="text" name="tdauer" id="tdauer"/></td>
+						<td>Tank gef&uuml;llt</td>
+						<td><input type="checkbox" name="tank" id="tank"/></td>
+					</tr>
+					<tr>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<br>
+			<script type="text/javascript">
+	        function loadValues(routenr) { 
+	        	
+	        	$.ajax({
+	        		url: "app_trip_load.php",
+		        	data: {
+		        		   'tnr': routenr
+		        		  },
+		        	dataType: "json",	
+	        	}).done(function(data) {
+		        	
+		        	document.getElementById('titel').value = data['titel'];
+		        	document.getElementById('von').value = data['von'];
+		        	document.getElementById('nach').value = data['nach'];
+		        	document.getElementById('tstart').value = data['tstart'];
+		        	document.getElementById('tende').value = data['tende'];
+		        	document.getElementById('tdauer').value = data['tdauer'];
+		        	document.getElementById('skipper').value = data['skipper'];
+					document.getElementById('crew').value = data['crew'];
+					document.getElementById('motor').value = data['motor'];
+					document.getElementById('tank').value = data['tank'];
+		
+	        	});
+		
+	        }
+	        </script>
+			
 			<div class="appTableDiv" id="appRoutelist" align="center">
 				<table class="appTable" cellspacing="0px" cellpadding="5px">
 					<thead>

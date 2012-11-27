@@ -3,7 +3,7 @@
     	
     	$menu_title = "app";
 		$menu_id = 2;
-		$submenu_id = 4;
+		$submenu_id = 3;
 		include('header.php');
 		include('app_menu.php');
 	?>
@@ -11,48 +11,55 @@
     	<div id="appWrapper" align="center">
     		<br>
     		<h2>Routen Informationen</h2>
-    		<br>
-			<div class="appInputDiv">
-				<table>
-					<thead>
-					<tr>
-						<td>Trip title</td>
-						<td colspan="4"><input type="text" name="titel" id="titel" size="50%"/></td>
-					</tr>
-					</thead>
-					<tbody>
-                    <tr>
-						<td>Von</td>
-						<td><input type="text" name="von" id="von"/><td/>
-						<td>Crew</td>
-						<td rowspan="3"><textarea cols="20" rows="3"></textarea></td>
-						<td>Start</td>
-						<td><input type="text" name="tstart" id="tstart"/></td>
-                    </tr>
-					<tr>
-						<td>Nach</td>
-						<td><input type="text" name="nach" id="nach"/></td><td></td><td></td>
-						<td>Ende</td>
-						<td><input type="text" name="tende" id="tende"/></td>
-						<td>Motor(min)</td>
-						<td><input type="text" name="motor" id="motor"/></td>
-					</tr>
-					<tr>
-						<td>Skipper</td>
-						<td><input type="text" name="skipper" id="skipper"/>
-						</td><td></td><td></td>
-						<td>Dauer</td>
-						<td><input type="text" name="tdauer" id="tdauer"/></td>
-						<td>Tank gef&uuml;llt</td>
-						<td><input type="checkbox" name="tank" id="tank"/></td>
-					</tr>
-					<tr>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-			
 			<br>
+			<div id="waypointInputDiv">
+    		<div id="waypointInput">
+    			<table>
+    				<tbody>
+    					<tr>
+    						<td><label for="name">Name</label></td>
+    						<td><input type="text" name="name" id="name"/></td>
+    					</tr>
+    					<tr>
+    						<td><label for="lat">Latitude</label></td>
+    						<td><input type="text" name="lat" id="lat"/></td>
+    						<td><label for="lng">Longitude</label></td>
+    						<td><input type="text" name="lng" id="lng"/></td>
+    					</tr>
+    					<tr>
+    						<td><label for="btm">BTM</label></td>
+    						<td><input type="text" name="btm" id="btm"/></td>
+    						<td><label for="dtm">DTM</label></td>
+    						<td><input type="text" name="dtm" id="dtm"/></td>
+    					</tr>
+    				</tbody>
+    			</table>		        
+		    </div>
+    	</div>
+<br>
+<br>
+<script type="text/javascript">
+	        function loadValues(waypointnr) { 
+	        	
+	        	$.ajax({
+	        		url: "app_tripinfo_load.php",
+		        	data: {
+		        		   'wnr': waypointnr
+		        		  },
+		        	dataType: "json",	
+	        	}).done(function(data) {
+		        	
+		        	document.getElementById('name').value = data['name'];
+		        	document.getElementById('lat').value = data['lat'];
+		        	document.getElementById('lng').value = data['lng'];
+		        	document.getElementById('btm').value = data['btm'];
+		        	document.getElementById('dtm').value = data['dtm'];
+		
+	        	});
+		
+	        }
+	        </script>
+
 			<div class="appTableDiv" id="tripinfo" align="center">
 				<table class="appTable" cellspacing="0px" cellpadding="5px">
 					<thead>

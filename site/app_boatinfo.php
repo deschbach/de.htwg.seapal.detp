@@ -22,24 +22,22 @@
                     <td><input type="text" name="typ" id="typ" /></td>
                     <td><label for="baujahr">Baujahr</label></td>
                     <td><input type="text" name="baujahr" id="baujahr" /></td>
-                </tr>
-                <tr>
                     <td><label for="registernummer">Registernummer</label></td>
                     <td><input type="text" name="registernummer" id="registernummer" /></td>
-                    <td><label for="konstrukteur">Konstrukteur</label></td>
-                    <td><input type="text" name="konstrukteur" id="konstrukteur" /></td>
-                    <td><label for="motor">Motor</label></td>
-                    <td><input type="text" name="motor" id="motor" /></td>
                 </tr>
                 <tr>
+                    <td><label for="konstrukteur">Konstrukteur</label></td>
+                    <td><input type="text" name="konstrukteur" id="konstrukteur" /></td>   
+                    <td><label for="motor">Motor</label></td>
+                    <td><input type="text" name="motor" id="motor" /></td>
                     <td><label for="segelzeichen">Segelzeichen</label></td>
                     <td><input type="text" name="segelzeichen" id="segelzeichen" /></td>
                     <td><label for="laenge">L&auml;nge</label></td>
                     <td><input type="text" name="laenge" id="laenge" /></td>
-                    <td><label for="tankgroesse">Tankgr&ouml;&szlig;e</label></td>
-                    <td><input type="text" name="tankgroesse" id="tankgroesse" /></td>
                 </tr>
                 <tr>
+                    <td><label for="tankgroesse">Tankgr&ouml;&szlig;e</label></td>
+                    <td><input type="text" name="tankgroesse" id="tankgroesse" /></td>               
                     <td><label for="heimathafen">Heimathafen</label></td>
                     <td><input type="text" name="heimathafen" id="heimathafen" /></td>
                     <td><label for="breite">Breite</label></td>
@@ -54,24 +52,22 @@
                     <td><input type="text" name="tiefgang" id="tiefgang" /></td>
                     <td><label for="abwassertankgroesse">Abwassertankgr&ouml;&szlig;e</label></td>
                     <td><input type="text" name="abwassertankgroesse" id="abwassertankgroesse" /></td>
-                </tr>
-                <tr>
                     <td><label for="eigner">Eigner</label></td>
                     <td><input type="text" name="eigner" id="eigner" /></td>
+                </tr>
+                <tr>
                     <td><label for="masthoehe">Masth&ouml;he</label></td>
                     <td><input type="text" name="masthoehe" id="masthoehe" /></td>
                     <td><label for="grosssegelgroesse">Gro&szlig;segelgr&ouml;&szlig;e</label></td>
                     <td><input type="text" name="grosssegelgroesse" id="grosssegelgroesse" /></td>
-                </tr>
-                <tr>
                     <td><label for="versicherung">Versicherung</label></td>
                     <td><input type="text" name="versicherung" id="versicherung" /></td>
-                    <td><label for="verdraengung">Verdr&auml;ngung</label></td>
+                    <td><label for="verdraengung">Verdr&auml;ngung</label></td>             
                     <td><input type="text" name="verdraengung" id="verdraengung" /></td>
-                    <td><label for="genuagroesse">Genuagr&ouml;&szlig;e</label></td>
-                    <td><input type="text" name="genuagroesse" id="genuagroesse" /></td>
                 </tr>
                 <tr>
+                    <td><label for="genuagroesse">Genuagr&ouml;&szlig;e</label></td>
+                    <td><input type="text" name="genuagroesse" id="genuagroesse" /></td>
                     <td><label for="rufzeichen">Rufzeichen</label></td>
                     <td><input type="text" name="rufzeichen" id="rufzeichen" /></td>
                     <td><label for="rigart">Rig-Art</label></td>
@@ -82,7 +78,7 @@
             </tbody>
         </table>
         <br>
-        
+        <br>
         <script type="text/javascript">
 	        function loadValues(boatnr) { 
 	        	
