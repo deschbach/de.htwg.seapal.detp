@@ -54,10 +54,15 @@ label {
     font-weight: bold;
 }
 
-#routeMenuContainer, #distanceToolContainer {
+#routeMenuContainer, #distanceToolContainer, #followCurrentPositionContainer {
     position: relative;
     margin-right: auto;
     margin-left: auto;
+}
+
+#followCurrentPosition_button {
+    position: absolute;
+    z-index: 2;
 }
 
 #routeMenu, #distanceToolMenu {
@@ -65,10 +70,6 @@ label {
     z-index: 2;
     white-space: nowrap;
     text-align: center;
-}
-
-#route_buttons, #distanceTool_buttons {
-    background: #1B2024;
 }
 
 #route_distance, #distanceTool_distance {

@@ -36,8 +36,8 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 				$Server->wsSend($id, "You said: $message");
 		}
 
-	sleep(3);		
-	$lng = $lng + 0.01;
+	usleep (100000);		
+	$lng = $lng + 0.0005;
 
 	}
 

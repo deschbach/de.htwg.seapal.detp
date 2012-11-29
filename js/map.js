@@ -21,9 +21,10 @@ $(function() {
 	//Log any messages sent from server
 	Server.bind('message', function( message ) {
 		updateChat( message );
-        if ( !isNaN(message.split(" ")[0]) && !isNaN(message.split(" ")[1]) ) {
-            currentPositionMarker.setPosition(new google.maps.LatLng(message.split(" ")[0], message.split(" ")[1]));
-            map.setCenter(new google.maps.LatLng(message.split(" ")[0], message.split(" ")[1]));
+		if (!isNaN(message.split(" ")[0]) && !isNaN(message.split(" ")[1])) {
+		    latLng = message.split(" ");
+		    noToggleOfFollowCurrentPositionButton = true;
+		    currentPositionMarker.setPosition(new google.maps.LatLng(latLng[0], latLng[1]));
         }
 	});
 
@@ -41,6 +42,7 @@ function sendChat( message ) {
 	Server.send( 'message', message );
 }
 
+// Php-Server JS-Code auslagern?
 // andere Möglichkeit zur Routenbenennung überlegen
 // wozu lat/long anzeige? entfernen?
 // openseamap fehler beheben falls möglich
@@ -54,6 +56,8 @@ var MODE = { DEFAULT: { value: 0, name: "default" }, ROUTE: { value: 1, name: "r
 var currentMode = MODE.DEFAULT;
 
 var currentPositionMarker = null;
+var followCurrentPosition = false;
+var noToggleOfFollowCurrentPositionButton = false;
 
 var temporaryMarker = null;
 var temporaryMarkerInfobox = null;
@@ -113,16 +117,17 @@ function initialize() {
     };
 
     //set route menu position
+    document.getElementById('followCurrentPositionContainer').style.width = document.getElementById('followCurrentPosition_button').offsetWidth + "px";
     document.getElementById('routeMenuContainer').style.width = document.getElementById('routeMenu').offsetWidth + "px";
-    document.getElementById('routeMenuContainer').style.top = "0px";
     document.getElementById('routeMenuContainer').style.display = "none";
+    document.getElementById('routeMenu').style.padding = document.getElementById('followCurrentPosition_button').offsetHeight + "px 0 0 0";
     document.getElementById('distanceToolContainer').style.width = document.getElementById('distanceToolMenu').offsetWidth + "px";
-    document.getElementById('distanceToolContainer').style.top = "0px";
+    document.getElementById('distanceToolMenu').style.padding = document.getElementById('followCurrentPosition_button').offsetHeight + "px 0 0 0";
     document.getElementById('distanceToolContainer').style.display = "none";
 
     // initialize map
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
+    
     // set client position
     currentPosition = new google.maps.LatLng(47.66, 9.16)
 
@@ -145,6 +150,12 @@ function initialize() {
         name: "OpenStreetMap",
         maxZoom: 18
     }));
+
+    google.maps.event.addListener(currentPositionMarker, 'position_changed', function () {
+        if (followCurrentPosition) {
+            map.setCenter(currentPositionMarker.getPosition());
+        }
+    });
 
     //map.overlayMapTypes.push(new google.maps.ImageMapType({
     //    getTileUrl: function (coord, zoom) {
@@ -176,6 +187,14 @@ function initialize() {
             setTemporaryMarker(event.latLng);
         } else if (currentMode == MODE.ROUTE || currentMode == MODE.DISTANCE) {
             addRouteMarker(event.latLng);
+        }
+    });
+
+    google.maps.event.addListener(map, 'center_changed', function () {
+        if (followCurrentPosition && !noToggleOfFollowCurrentPositionButton) {
+            toggleFollowCurrentPosition();
+        } else {
+            noToggleOfFollowCurrentPositionButton = false;
         }
     });
 }
@@ -370,4 +389,16 @@ function fromLatLngToPixel(latLng) {
     pixel.x += document.getElementById('map_canvas').offsetLeft;
     pixel.y += document.getElementById('map_canvas').offsetTop;
     return pixel;
+}
+
+function toggleFollowCurrentPosition() {
+    followCurrentPosition = !followCurrentPosition;
+    if (followCurrentPosition) {
+        document.getElementById("followCurrentPositionbutton").value = "Eigener Position nicht mehr folgen";
+        noToggleOfFollowCurrentPositionButton = true;
+        map.setCenter(currentPositionMarker.getPosition());
+    } else {
+        document.getElementById("followCurrentPositionbutton").value = "Eigener Position folgen";
+    }
+    document.getElementById('followCurrentPositionContainer').style.width = document.getElementById('followCurrentPosition_button').offsetWidth + "px";
 }

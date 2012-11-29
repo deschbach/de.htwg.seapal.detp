@@ -30,6 +30,11 @@
             <div id="distanceTool_distance">Distanz: <span id="distanceTool_number"></span>m</div>
         </div>
     </div>
+	<div id="followCurrentPositionContainer">
+		<div id="followCurrentPosition_button">
+			<input type="button" value="Eigener Position folgen" id="followCurrentPositionbutton" onclick="javascript: toggleFollowCurrentPosition()" />
+		</div>
+    </div>
     <div id="appWrapper">
     	<div id="map_canvas" style="width:80%; float:left;"></div>
     	<div id="chat" style="width:20%; background: #EEEEEE; float:right; height:100%;" align="center">
