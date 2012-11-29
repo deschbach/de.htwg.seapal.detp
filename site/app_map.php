@@ -37,8 +37,7 @@
     		<div id="chat-area" style="height:60%; width:90%; background-color: white; overflow: auto;"></div>
     		<br>
     		<form id="send-message-form">
-            	<p>Your message: </p>
-            	<textarea id="send-message-box" maxlength = '100' style="border:1px solid #CCC;margin:0px;padding:0px; width:200px;"></textarea>
+            	<input type="button" id="sendButton" value="START"/>
             </form>
     	</div>
     </div>

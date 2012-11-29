@@ -3,14 +3,9 @@ $(function() {
 	Server = new FancyWebSocket('ws://127.0.0.1:9300');
 
 	// watch textarea for release of key press
-	 $('#send-message-box').keyup(function(e) {	
-	 					 
-		  if (e.keyCode == 13) { //Enter is pressed
-            var text = $(this).val();
-			sendChat( text );
-
-			$(this).val('');
-		}
+	 $('#sendButton').click(function(e) {				 
+            var text = "Request";
+			sendChat(text);
 	});
 
 	//Let the user know we're connected
@@ -28,6 +23,7 @@ $(function() {
 		updateChat( message );
         if ( !isNaN(message.split(" ")[0]) && !isNaN(message.split(" ")[1]) ) {
             currentPositionMarker.setPosition(new google.maps.LatLng(message.split(" ")[0], message.split(" ")[1]));
+            map.setCenter(new google.maps.LatLng(message.split(" ")[0], message.split(" ")[1]));
         }
 	});
 
