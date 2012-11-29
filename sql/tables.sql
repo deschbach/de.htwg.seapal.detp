@@ -45,7 +45,6 @@ CREATE TABLE bootinfo (
 /* table for tripinformations */
 CREATE TABLE tripinfo (
 	tnr INT NOT NULL AUTO_INCREMENT,
-    bnr INT NOT NULL,
 	titel VARCHAR(30) NOT NULL,
 	von VARCHAR(30) NOT NULL,
 	nach VARCHAR(30) NOT NULL,
@@ -56,8 +55,7 @@ CREATE TABLE tripinfo (
 	tdauer FLOAT NOT NULL,
 	motor FLOAT DEFAULT NULL,
 	tank BOOLEAN DEFAULT FALSE,
-	PRIMARY KEY (tnr),
-    FOREIGN KEY (bnr) REFERENCES bootinfo (bnr)
+	PRIMARY KEY (tnr)
 );
 
 /* table for waypoints */
@@ -65,8 +63,7 @@ CREATE TABLE wegpunkte (
 	wnr INT NOT NULL AUTO_INCREMENT,
 	tnr INT NOT NULL,
 	name VARCHAR(30) NOT NULL,
-	lat VARCHAR(30) NOT NULL,
-    lng VARCHAR(30) NOT NULL,
+	position VARCHAR(30) NOT NULL,
 	btm VARCHAR(30) NOT NULL,
 	dtm VARCHAR(30) NOT NULL,
 	manoever VARCHAR(30) DEFAULT NULL,

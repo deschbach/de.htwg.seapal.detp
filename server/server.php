@@ -10,20 +10,20 @@ require 'class.PHPWebSocket.php';
 function wsOnMessage($clientID, $message, $messageLength, $binary) {
 	global $Server;
 	$ip = long2ip( $Server->wsClients[$clientID][6] );
-	
+
 	$lat = 47.66;
 	$lng = 9.16;
-	
+
 	// check if message length is 0
 	if ($messageLength == 0) {
 		$Server->wsClose($clientID);
 		return;
 	}
-	
+
 	$i = 0;
-	
+
 	while($i < 30) {
-		
+
 		//The speaker is the only person in the room. Don't let them feel lonely.
 	if ( sizeof($Server->wsClients) == 1 )
 		$Server->wsSend($clientID, $lat . " " . $lng);
@@ -35,15 +35,15 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 			else 
 				$Server->wsSend($id, "You said: $message");
 		}
-		
-	sleep(3);		
-	$lng = $lng + 0.1;
-		
-	}
-	
-	
 
-	
+	sleep(3);		
+	$lng = $lng + 0.01;
+
+	}
+
+
+
+
 }
 
 // when a client connects

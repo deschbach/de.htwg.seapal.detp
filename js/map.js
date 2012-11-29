@@ -1,3 +1,49 @@
+$(function() {
+	updateChat('Connecting...');
+	Server = new FancyWebSocket('ws://127.0.0.1:9300');
+
+	// watch textarea for release of key press
+	 $('#send-message-box').keyup(function(e) {	
+	 					 
+		  if (e.keyCode == 13) { //Enter is pressed
+            var text = $(this).val();
+			sendChat( text );
+
+			$(this).val('');
+		}
+	});
+
+	//Let the user know we're connected
+	Server.bind('open', function() {
+		updateChat( "Connected." );
+	});
+
+	//OH NO! Disconnection occurred.
+	Server.bind('close', function( data ) {
+		updateChat( "Disconnected." );
+	});
+
+	//Log any messages sent from server
+	Server.bind('message', function( message ) {
+		updateChat( message );
+        if ( !isNaN(message.split(" ")[0]) && !isNaN(message.split(" ")[1]) ) {
+            currentPositionMarker.setPosition(new google.maps.LatLng(message.split(" ")[0], message.split(" ")[1]));
+        }
+	});
+
+	Server.connect();
+});
+
+var Server;
+
+function updateChat( message ) {
+	$('#chat-area').append($("<p>"+ message +"</p>"));
+	document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight;
+}
+
+function sendChat( message ) {
+	Server.send( 'message', message );
+}
 
 // andere Möglichkeit zur Routenbenennung überlegen
 // wozu lat/long anzeige? entfernen?
@@ -87,18 +133,12 @@ function initialize() {
     var currentMarkerOptions = {
         position: currentPosition,
         map: map,
-        icon: currentPositionMarkerImage,
-        draggable: true
+        icon: currentPositionMarkerImage
     }
 
     // initialize marker for current position
-    currentPositionMarker = new google.maps.Marker(currentMarkerOptions);
-    currentPositionMarker.setMap(map);
 
-    google.maps.event.addListener(currentPositionMarker, 'click', function (event) {
-        var pixel = fromLatLngToPixel(event.latLng);
-        $('#currentPositionContextMenu').contextMenu({ x: pixel.x, y: pixel.y });
-    });
+    currentPositionMarker = new google.maps.Marker(currentMarkerOptions);
 
     // set map types
     map.mapTypes.set("OSM", new google.maps.ImageMapType({

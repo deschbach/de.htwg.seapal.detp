@@ -9,16 +9,6 @@
         include('app_menu.php');
     ?>
     
-    <script Type="text/javascript" src="fancywebsocket.js"></script>
-	<script type="text/javascript" src="chat.js"></script>
-	
-	<link rel="stylesheet" href="style.css" type="text/css" />
-	<style>
-		input, textarea {border:1px solid #CCC;margin:0px;padding:0px}
-		#log {width:100%;height:400px}
-		#message {width:100%;line-height:20px}
-	</style>
-    
 </head>
 <body onload="initialize()">
 
@@ -41,14 +31,14 @@
         </div>
     </div>
     <div id="appWrapper">
-    	<div id="map_canvas" style="width:50%; float:left;"></div>
-    	<div id="chat" style="width:50%; background: #EEEEEE; float:right; height:100%;" align="center">
+    	<div id="map_canvas" style="width:80%; float:left;"></div>
+    	<div id="chat" style="width:20%; background: #EEEEEE; float:right; height:100%;" align="center">
     		<br>
-    		<div id="chat-area" style="height:60%; width:90%; background-color: white;"></div>
+    		<div id="chat-area" style="height:60%; width:90%; background-color: white; overflow: auto;"></div>
     		<br>
     		<form id="send-message-form">
             	<p>Your message: </p>
-            	<textarea id="send-message-box" maxlength = '100' style="border:1px solid #CCC;margin:0px;padding:0px; width:300px;"></textarea>
+            	<textarea id="send-message-box" maxlength = '100' style="border:1px solid #CCC;margin:0px;padding:0px; width:200px;"></textarea>
             </form>
     	</div>
     </div>
