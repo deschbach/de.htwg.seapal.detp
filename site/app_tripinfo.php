@@ -38,27 +38,7 @@
     	</div>
 <br>
 <br>
-<script type="text/javascript">
-	        function loadValues(waypointnr) { 
-	        	
-	        	$.ajax({
-	        		url: "app_tripinfo_load.php",
-		        	data: {
-		        		   'wnr': waypointnr
-		        		  },
-		        	dataType: "json",	
-	        	}).done(function(data) {
-		        	
-		        	document.getElementById('name').value = data['name'];
-		        	document.getElementById('lat').value = data['lat'];
-		        	document.getElementById('lng').value = data['lng'];
-		        	document.getElementById('btm').value = data['btm'];
-		        	document.getElementById('dtm').value = data['dtm'];
-		
-	        	});
-		
-	        }
-	        </script>
+
 
 			<div class="appTableDiv" id="tripinfo" align="center">
 				<table class="appTable" cellspacing="0px" cellpadding="5px">
@@ -99,8 +79,8 @@
 							
 							while ($row = mysql_fetch_array($result)) {
 							
-								echo("<tr onclick=\"loadValues('" . $row['wnr'] . "');\">");
-								echo("<td>" . $row['name'] . "</td>");
+								echo("<tr>");
+								echo("<td><span class='wnr' style='display: none;'>".$row['wnr']."</span>" . $row['name'] . "</td>");
 								echo("<td>" . $row['lat'] . "</td>");
 								echo("<td>" . $row['lng'] . "</td>");
 								echo("<td>" . $row['btm'] . "</td>");
@@ -121,5 +101,37 @@
             <input type="submit" id="save" name="submit" value="Speichern" class="button"/>
 		</div>
 		</div>
+		
+		<script type="text/javascript">
+		
+			$(function() {
+			
+				$("table tr").click(function(event) {
+					loadValues($("span.wnr", this).html());
+				});
+				
+				function loadValues(waypointnr) { 
+	        	
+	        	$.ajax({
+	        		url: "app_tripinfo_load.php",
+		        	data: {
+		        		   'wnr': waypointnr
+		        		  },
+		        	dataType: "json",
+		        	success: function(data) {
+			        	$('#name').val(data['name']);
+			        	$('#lat').val(data['lat']);
+			        	$('#lng').val(data['lng']);
+			        	$('#btm').val(data['btm']);
+			        	$('#dtm').val(data['dtm']);
+		        	}	
+	        	});
+		
+	        	}
+				
+			});
+			
+	        
+	        </script>
 	</body>
 <html>
