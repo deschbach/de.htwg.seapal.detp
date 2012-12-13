@@ -14,7 +14,7 @@ var inactivePathOptions = {
     strokeWeight: 2
 }
 var distanceToolOptions = {
-    strokeColor: "#FFFF00",
+    strokeColor: "#FF0000",
     strokeOpacity: 0.7,
     strokeWeight: 3
 }
@@ -59,6 +59,9 @@ $(function () {
                 if (currentRoute != null) {
                     toggleDraggable(currentRoute);
                     currentRoute.route.setOptions(inactivePathOptions);
+                }
+                if (currentMode = MODE.DISTANCE) {
+                    stopDistanceToolMode();
                 }
                 currentRoute = getRouteByMarker(selectedRouteMarker);
                 currentMode = MODE.ROUTE;
