@@ -1,7 +1,5 @@
 <?php
-    
-    $url = "http://seapal/site/index.php";
-    
-    header("location: $url");
+
+    Header("Location: site/index.php");
 
 ?>
