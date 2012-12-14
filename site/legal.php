@@ -3,6 +3,7 @@
 
 	<?php 
 		$menu_title = "legal";
+		$menu_id = 1;
 		include('header.php'); 
 	?>
 	

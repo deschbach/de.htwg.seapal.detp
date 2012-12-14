@@ -3,6 +3,7 @@
 	
 <?php 
 	$menu_title = "impressum";
+	$menu_id = 1;
 	include('header.php');
 ?>
 
