@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	
-<?php 
-	$menu_title = "impressum";
-	include('header.php');
-?>
+    <% String menu_title = "impressum"; %>
+    <%@ include file="header.jsp" %>
 
 <div id="wrapper">
 	<div id="page" class="container">
@@ -67,6 +65,6 @@
 	</div>
 	<!-- end #page -->
 </div>
-<?php include('footer.php'); ?>
+    <%@ include file="footer.jsp" %>
 	</body>
 </html>

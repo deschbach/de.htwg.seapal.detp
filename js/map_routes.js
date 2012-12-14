@@ -60,7 +60,7 @@ $(function () {
                     toggleDraggable(currentRoute);
                     currentRoute.route.setOptions(inactivePathOptions);
                 }
-                if (currentMode = MODE.DISTANCE) {
+                if (currentMode == MODE.DISTANCE) {
                     stopDistanceToolMode();
                 }
                 currentRoute = getRouteByMarker(selectedRouteMarker);

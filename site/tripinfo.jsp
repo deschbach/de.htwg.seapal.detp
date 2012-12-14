@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
 
 <html>
-    <?php
-    	
-    	$menu_title = "app";
-		$menu_id = 2;
-		include('header.php'); 
-		
-		
-	?>
+
+    <% String menu_title = "app";%>
+    <% int menu_id = 2;%>
+    <%@ include file="header.jsp" %>
     <body>
-		<form method="post" action="tripinfo_insert.php">
+		<form method="post" action="tripinfo_insert.jsp">
 			<div class="outer_frame">
 				<div class="inner_frame" id="tripinfo">
 					<div>
@@ -141,6 +137,6 @@
 				</div>
 			</div>
 		</form>
-		<?php include('footer.php'); ?>
+    <%@ include file="footer.jsp" %>
 	</body>
 <html>
