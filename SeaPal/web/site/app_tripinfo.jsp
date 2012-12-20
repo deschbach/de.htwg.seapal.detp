@@ -85,7 +85,7 @@
                         echo("<td>" . $row['btm'] . "</td>");
                         echo("<td>" . $row['dtm'] . "</td>");
                         echo("<td>" . $row['manoever'] . "</td>");
-                        echo("<td align='right'><a href='app_waypoint.php?wnr=" . $row['tnr'] . "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
+                        echo("<td align='right'><a href='app_waypoint.jsp?wnr=" . $row['tnr'] . "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
                         echo("</tr>");
 
                         }

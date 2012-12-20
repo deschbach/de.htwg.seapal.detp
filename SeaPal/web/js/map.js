@@ -43,9 +43,9 @@ function sendChat( message ) {
 }
 
 // Php-Server JS-Code auslagern?
-// andere Möglichkeit zur Routenbenennung überlegen
+// andere Mï¿½glichkeit zur Routenbenennung ï¿½berlegen
 // wozu lat/long anzeige? entfernen?
-// openseamap fehler beheben falls möglich
+// openseamap fehler beheben falls mï¿½glich
 // Benutzerposition bestimmen
 
 var map = null;

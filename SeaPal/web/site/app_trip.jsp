@@ -19,7 +19,7 @@
                     <thead>
                         <tr>
                             <td>Trip title</td>
-                            <td colspan="4"><input type="text" name="titel" id="titel" size="50%"/></td>
+                            <td colspan="4"><input type="text" name="titel" id="titel" size="50"/></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,8 +47,6 @@
                             <td><input type="text" name="tdauer" id="tdauer"/></td>
                             <td>Tank gef&uuml;llt</td>
                             <td><input type="checkbox" name="tank" id="tank"/></td>
-                        </tr>
-                        <tr>
                         </tr>
                     </tbody>
                 </table>
@@ -123,7 +121,7 @@
                         echo("<td>" . $row['tende'] . "</td>");
                         echo("<td>" . $row['tdauer'] . "</td>");
                         echo("<td>" . $row['motor'] . "</td>");
-                        echo("<td align='right'><a href='app_tripinfo.php?tnr=" . $row['tnr'] . "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
+                        echo("<td align='right'><a href='app_tripinfo.jsp?tnr=" . $row['tnr'] . "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
                         echo("</tr>");
 
                         }
