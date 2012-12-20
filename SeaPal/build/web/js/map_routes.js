@@ -29,7 +29,7 @@ function Route(route) {
 $(function () {
     $.contextMenu({
         selector: '#routeContextMenu_active',
-        callback: function (key, options) {
+        callback: function (key) {
             if (key == "deleteMarker") {
                 deleteRouteMarker();
             } else if (key == "addMarker") {
@@ -54,7 +54,7 @@ $(function () {
 $(function () {
     $.contextMenu({
         selector: '#routeContextMenu_inactive',
-        callback: function (key, options) {
+        callback: function (key) {
             if (key == "selectRoute") {
                 if (currentRoute != null) {
                     toggleDraggable(currentRoute);
@@ -236,7 +236,6 @@ function toggleDraggable(route) {
     for (var i = 0; i < route.markerArray.length; i++) {
         route.markerArray[i].setDraggable(!route.markerArray[i].getDraggable());
     }
-
 }
 
 function getRouteMarker(latLng) {

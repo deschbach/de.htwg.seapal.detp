@@ -8,19 +8,12 @@
 
     </head>
     <body onload="initialize()">
+        <%@ include file="navigation.jsp" %>
 
-        <?php include('navigation.php'); ?>
 
         <div id="app_wrapper" align="center">
             <div id="app_menu_container">
-                <label id="app_left_title"><a href="index.php">SeaPal WebApp</a></label>
-
-                <!--
-                <label>Latitude:</label>
-            <input type="text" id="lat" disabled="disabled" />
-            <label>Longitude:</label>
-            <input type="text" id="long" disabled="disabled" />
-                -->
+                <label id="app_left_title"><a href="index.jsp">SeaPal WebApp</a></label>
 
                 <a class="app_links" href="app.jsp">Map</a>
                 <a class="app_links" href="boatinfo.jsp">Logbuch</a>

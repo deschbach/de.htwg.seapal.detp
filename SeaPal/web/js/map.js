@@ -3,7 +3,7 @@ $(function() {
 	Server = new FancyWebSocket('ws://127.0.0.1:9300');
 
 	// watch textarea for release of key press
-	 $('#sendButton').click(function(e) {				 
+	 $('#sendButton').click(function() {				 
             var text = "Request";
 			sendChat(text);
 	});
@@ -14,7 +14,7 @@ $(function() {
 	});
 
 	//OH NO! Disconnection occurred.
-	Server.bind('close', function( data ) {
+	Server.bind('close', function() {
 		updateChat( "Disconnected." );
 	});
 
@@ -166,16 +166,6 @@ function initialize() {
     //    maxZoom: 18
     //}));
 
-    //// initialize header with current map center
-    //document.getElementById("lat").value = map.getCenter().lat();
-    //document.getElementById("long").value = map.getCenter().lng();
-
-    //// center changed
-    //google.maps.event.addListener(map, 'center_changed', function () {
-    //    document.getElementById("lat").value = map.getCenter().lat();
-    //    document.getElementById("long").value = map.getCenter().lng();
-    //});
-
     overlay.draw = function () { };
     overlay.setMap(map);
 
@@ -233,7 +223,7 @@ $(function () {
             "startroute": { name: "Neue Route setzen", icon: "startroute" },
             "distance": { name: "Distanz messen", icon: "distance" },
             "destination": { name: "Zum Ziel machen", icon: "destination" },
-            "delete": { name: "L&ouml;schen", icon: "delete" },
+            "delete": { name: "L&ouml;schen", icon: "delete" }
         }
     });
 });
@@ -253,7 +243,7 @@ $(function () {
         },
         items: {
             "destination": { name: "Zum Ziel machen", icon: "destination" },
-            "delete": { name: "L&ouml;schen", icon: "delete" },
+            "delete": { name: "L&ouml;schen", icon: "delete" }
         }
     });
 });
@@ -298,6 +288,7 @@ function getMarkerWithInfobox(event) {
             return fixedMarkerArray[i];
         }
     }
+    return null;
 }
 
 function setTemporaryMarker(position) {

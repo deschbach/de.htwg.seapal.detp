@@ -1,5 +1,7 @@
+CREATE DATABASE seapal;
+
 /* table for users */
-CREATE TABLE benutzer (
+CREATE TABLE seapal.benutzer (
 	bnr INT NOT NULL AUTO_INCREMENT,
 	benutzername VARCHAR(20) NOT NULL,
 	passwort VARCHAR(10) NOT NULL,
@@ -13,7 +15,7 @@ CREATE TABLE benutzer (
 
 
 /* table for bootinformations */
-CREATE TABLE bootinfo (
+CREATE TABLE seapal.bootinfo (
 	bnr INT NOT NULL AUTO_INCREMENT,
 	bootname VARCHAR(30) NOT NULL,
 	registernummer INT NOT NULL,
@@ -43,7 +45,7 @@ CREATE TABLE bootinfo (
 );
 
 /* table for tripinformations */
-CREATE TABLE tripinfo (
+CREATE TABLE seapal.tripinfo (
 	tnr INT NOT NULL AUTO_INCREMENT,
 	titel VARCHAR(30) NOT NULL,
 	von VARCHAR(30) NOT NULL,
@@ -59,7 +61,7 @@ CREATE TABLE tripinfo (
 );
 
 /* table for waypoints */
-CREATE TABLE wegpunkte (
+CREATE TABLE seapal.wegpunkte (
 	wnr INT NOT NULL AUTO_INCREMENT,
 	tnr INT NOT NULL,
 	name VARCHAR(30) NOT NULL,

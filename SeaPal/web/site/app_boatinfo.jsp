@@ -87,7 +87,7 @@
                         },
                         dataType: "json"	
                     }).done(function(data) {
-		        	
+
                         document.getElementById('bootname').value = data['bootname'];
                         document.getElementById('typ').value = data['typ'];
                         document.getElementById('baujahr').value = data['baujahr'];
