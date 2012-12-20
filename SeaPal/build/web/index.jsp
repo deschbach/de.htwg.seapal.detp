@@ -6,4 +6,4 @@
     
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<% response.sendRedirect("site/index.jsp");%>
+<% response.sendRedirect("site_jsp/index.jsp");%>
