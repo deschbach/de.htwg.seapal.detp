@@ -1,13 +1,11 @@
 <html>
 
-
     <% String menu_title = "app";%>
     <% int menu_id = 2;%>
     <% int submenu_id = 2;%>
     <%@ include file="header.jsp" %>
     <%@ include file="app_menu.jsp" %>
     <%@ page import="java.sql.*" %>
-
 
     <body style="overflow: none;">
         <div id="appWrapper" align="center">
@@ -82,7 +80,6 @@
             <br>
             <script type="text/javascript">
                 function loadValues(boatnr) { 
-	        	
                     $.ajax({
                         url: "app_boatinfo_load.jsp",
                         data: {
@@ -148,53 +145,31 @@
                             try {
                                 Class.forName("com.mysql.jdbc.Driver");
                                 con = DriverManager.getConnection(url, "root", "");
+
                                 stmt = con.createStatement();
-                                stmt.executeUpdate("CREATE DATABASE books");
+                                ResultSet result = stmt.executeQuery("SELECT * FROM seapal.bootinfo");
+
+                                while (result.next()) {
+                                    out.print("<tr onclick=\"loadValues(" + result.getString("bnr") + ")\">");
+                                    out.print("<td>" + result.getString("bootname") + "</td>");
+                                    out.print("<td>" + result.getString("typ") + "</td>");
+                                    out.print("<td>" + result.getString("konstrukteur") + "</td>");
+                                    out.print("<td>" + result.getString("baujahr") + "</td>");
+                                    out.print("<td>" + result.getString("heimathafen") + "</td>");
+                                    out.print("<td>" + result.getString("laenge") + "</td>");
+                                    out.print("<td>" + result.getString("breite") + "</td>");
+                                    out.print("<td>" + result.getString("tiefgang") + "</td>");
+                                    out.print("<td>" + result.getString("eigner") + "</td>");
+                                    out.print("<td align='right'><a href='app_trip.jsp?bnr=" + result.getString("bnr")
+                                            + "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
+                                    out.print("</tr>");
+                                }
+
                                 con.close();
                             } catch (Exception e) {
                                 out.print(e);
                             }
-
                         %>
-
-                       <!-- <?php
-
-                        $conn = mysql_connect("localhost","root","root");
-
-                        $db_selected = mysql_select_db('SeaPal', $conn);
-
-                        if (!$db_selected) {
-                        die ('Can\'t use foo : ' . mysql_error());
-                        }
-
-                        $sql = "SELECT * FROM bootinfo;";
-
-                        $result = mysql_query($sql,$conn);
-
-                        if (!$result) {
-                        die('Invalid query: ' . mysql_error());
-                        }
-
-                        while ($row = mysql_fetch_array($result)) {
-
-                        echo("<tr onclick=\"loadValues('" . $row['bnr'] . "');\">");
-                        echo("<td>" . $row['bootname'] . "</td>");
-                        echo("<td>" . $row['typ'] . "</td>");
-                        echo("<td>" . $row['konstrukteur'] . "</td>");
-                        echo("<td>" . $row['baujahr'] . "</td>");
-                        echo("<td>" . $row['heimathafen'] . "</td>");
-                        echo("<td>" . $row['laenge'] . "</td>");
-                        echo("<td>" . $row['breite'] . "</td>");
-                        echo("<td>" . $row['tiefgang'] . "</td>");
-                        echo("<td>" . $row['eigner'] . "</td>");
-                        echo("<td align='right'><a href='app_trip.jsp?bnr=" . $row['bnr'] . "'><img src='../img/arrow.png' style='width:20px; padding-top:4px;'></a></td>");
-                        echo("</tr>");
-
-                        }
-
-                        mysql_close($conn);
-
-                        ?>-->
 
                     </tbody>
                 </table>
