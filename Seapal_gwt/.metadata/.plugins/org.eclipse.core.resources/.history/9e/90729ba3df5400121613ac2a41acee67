@@ -1,0 +1,222 @@
+package de.htwg.Seapal.client;
+
+import java.util.LinkedList;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+/**
+ * Entry point classes define <code>onModuleLoad()</code>.
+ */
+public class Seapal implements EntryPoint {
+	/**
+	 * The message displayed to the user when the server cannot be reached or
+	 * returns an error.
+	 */
+	private static final String SERVER_ERROR = "An error occurred while "
+			+ "attempting to contact the server. Please check your network "
+			+ "connection and try again.";
+
+	/**
+	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 */
+	private final DatabaseServiceAsync databaseService = GWT
+			.create(DatabaseService.class);
+	
+
+	
+
+	
+	
+	/**
+	 * This is the entry point method.
+	 */
+	public void onModuleLoad() {
+		
+		loadEntries();
+		
+		NodeList<Element> elems = Document.get().getElementsByTagName("button");
+		
+		for (int j = 0; j < elems.getLength(); j++) {
+			
+			Element elem = elems.getItem(j);
+			com.google.gwt.user.client.Element castedElem = (com.google.gwt.user.client.Element) elem;
+	
+			DOM.sinkEvents(castedElem, Event.ONCLICK);
+			DOM.setEventListener(castedElem, new EventListener() {
+				
+				@Override
+				public void onBrowserEvent(Event event) {
+					
+					Element elem = Element.as(((NativeEvent) event).getEventTarget());
+					
+					String elemId = elem.getId();
+					
+					if (elemId.equals("save")) {
+						insertEntry();
+					}
+				}
+			});
+		}
+	}
+	
+	// RPC Functions
+	
+	public void insertEntry() {
+		
+		final String jsonString = InsertEntry();
+		
+		databaseService.insertEntry(jsonString, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			@Override
+			public void onSuccess(String jsonString) {
+				addEntry(jsonString);
+				
+NodeList<Element> elems = Document.get().getElementsByTagName("a");
+				
+				for (int j = 0; j < elems.getLength(); j++) {
+					
+					Element elem = elems.getItem(j);
+					com.google.gwt.user.client.Element castedElem = (com.google.gwt.user.client.Element) elem;
+					
+					DOM.sinkEvents(castedElem, Event.ONCLICK);
+					DOM.setEventListener(castedElem, new EventListener() {
+						
+						@Override
+						public void onBrowserEvent(Event event) {
+				
+							Element elem = Element.as(((NativeEvent) event).getEventTarget());
+				
+							String classNames = elem.getClassName();
+				
+							if (classNames.contains("view") || classNames.contains("eye")) {
+								loadValues(Integer.parseInt(elem.getId()));
+							} else {
+								deleteEntry(Integer.parseInt(elem.getId()));
+							}
+
+						}		
+					});
+				}
+			}
+		});
+	}
+	
+	// Load values from entry
+	public void loadValues(int bnr) {
+		
+		databaseService.loadValues(bnr , new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+			
+			@Override
+			public void onSuccess(String jsonString) {
+				loadValues(jsonString);
+			}
+			
+		});
+	}
+	
+	// load all available entries
+	public void loadEntries() {
+		
+		databaseService.loadEntries(new AsyncCallback<LinkedList<String>>() {
+			
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			public void onSuccess(LinkedList<String> entries) {
+				
+				for (int i = 0; i < entries.size(); i++) {
+					addEntry(entries.get(i));
+				}
+					
+				NodeList<Element> elems = Document.get().getElementsByTagName("a");
+				
+				for (int j = 0; j < elems.getLength(); j++) {
+					
+					Element elem = elems.getItem(j);
+					com.google.gwt.user.client.Element castedElem = (com.google.gwt.user.client.Element) elem;
+					
+					DOM.sinkEvents(castedElem, Event.ONCLICK);
+					DOM.setEventListener(castedElem, new EventListener() {
+						
+						@Override
+						public void onBrowserEvent(Event event) {
+				
+							Element elem = Element.as(((NativeEvent) event).getEventTarget());
+				
+							String classNames = elem.getClassName();
+				
+							if (classNames.contains("view") || classNames.contains("eye")) {
+								loadValues(Integer.parseInt(elem.getId()));
+							} else {
+								deleteEntry(Integer.parseInt(elem.getId()));
+							}
+
+						}		
+					});
+				}
+			}
+		});
+	}
+	
+	// Delete entry
+	public void deleteEntry(final int bnr) {
+		
+		databaseService.deleteEntry(bnr, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				
+				if (result.booleanValue() == true) {
+					deleteEntry(String.valueOf(bnr));
+				} else {
+					System.out.println("SQLError!");
+				}
+			}
+			
+		});
+	}
+	
+	// Native Java-Script Functions
+	public static native void addEntry(String jsonString) /*-{
+		$wnd.addEntry(jsonString);
+	}-*/;
+	
+	public static native String InsertEntry() /*-{
+		return $wnd.insertEntry();
+	}-*/;
+	
+	public static native void deleteEntries() /*-{
+		$wnd.$('#entries').remove();
+	}-*/;
+	
+	public static native void deleteEntry(String bnr) /*-{
+		$wnd.deleteEntry(bnr); 
+	}-*/;
+	 
+	public static native void loadValues(String jsonString) /*-{
+		$wnd.loadValues(jsonString);
+	}-*/;
+	
+}
