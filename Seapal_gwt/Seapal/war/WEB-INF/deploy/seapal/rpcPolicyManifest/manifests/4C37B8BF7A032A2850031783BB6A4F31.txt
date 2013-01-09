@@ -1,2 +1,0 @@
-serviceClass: de.htwg.Seapal.client.DatabaseService
-path: 60B514E4E1CD3E14B01F8B1734DE7F73.gwt.rpc
