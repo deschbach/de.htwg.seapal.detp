@@ -1,0 +1,296 @@
+package de.htwg.Seapal.client;
+
+import java.util.LinkedList;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+/**
+ * Entry point classes define <code>onModuleLoad()</code>.
+ */
+public class Seapal implements EntryPoint {
+
+	/**
+	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 */
+	private final DatabaseServiceAsync databaseService = GWT.create(DatabaseService.class);
+	
+	/**
+	 * This is the entry point method.
+	 */
+	public void onModuleLoad() {
+		
+		loadEntries();
+		
+		initializeEventListeners();
+	}
+	
+	// RPC Functions
+	
+	public void insertEntry() {
+		
+		final String jsonString = getValues();
+		
+		databaseService.insertEntry(jsonString, new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			@Override
+			public void onSuccess(String jsonString) {
+				addEntry(jsonString, false);
+				updateEventListeners();
+			}
+		});
+	}
+	
+	// Load values from entry
+	public void loadValues(int bnr) {
+		
+		databaseService.loadValues(bnr , new AsyncCallback<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+			
+			@Override
+			public void onSuccess(String jsonString) {
+				loadValues(jsonString);
+			}
+
+		});
+	}
+	
+	// load all available entries
+	public void loadEntries() {
+		
+		databaseService.loadEntries(new AsyncCallback<LinkedList<String>>() {
+			
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			public void onSuccess(LinkedList<String> entries) {
+				
+				for (int i = 0; i < entries.size(); i++) {
+					addEntry(entries.get(i), true);
+				}		
+				updateEventListeners();
+			}
+		});
+	}
+	
+	// Delete entry
+	public void deleteEntry(final int bnr) {
+		
+		databaseService.deleteEntry(bnr, new AsyncCallback<Boolean>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("Error!");
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				
+				if (result.booleanValue() == true) {
+					deleteEntry(String.valueOf(bnr));
+				} else {
+					System.out.println("SQLError!");
+				}
+			}
+		});
+	}
+	
+	public void initializeEventListeners() {
+		
+		NodeList<Element> elems = Document.get().getElementsByTagName("button");
+		
+		for (int j = 0; j < elems.getLength(); j++) {
+			
+			Element elem = elems.getItem(j);
+			com.google.gwt.user.client.Element castedElem = (com.google.gwt.user.client.Element) elem;
+	
+			DOM.sinkEvents(castedElem, Event.ONCLICK);
+			DOM.setEventListener(castedElem, new EventListener() {
+				
+				@Override
+				public void onBrowserEvent(Event event) {
+					
+					Element elem = Element.as(((NativeEvent) event).getEventTarget());
+					
+					String elemId = elem.getId();
+					
+					if (elemId.equals("save")) {
+						insertEntry();
+					}
+				}
+			});
+		}
+		
+	}
+	
+	public void updateEventListeners() {
+		
+		NodeList<Element> elems = Document.get().getElementsByTagName("a");
+		
+		for (int j = 0; j < elems.getLength(); j++) {
+			
+			Element elem = elems.getItem(j);
+			com.google.gwt.user.client.Element castedElem = (com.google.gwt.user.client.Element) elem;
+			
+			DOM.sinkEvents(castedElem, Event.ONCLICK);
+			DOM.setEventListener(castedElem, new EventListener() {
+				
+				@Override
+				public void onBrowserEvent(Event event) {
+		
+					Element elem = Element.as(((NativeEvent) event).getEventTarget());
+		
+					String classNames = elem.getClassName();
+		
+					if (classNames.contains("view") || classNames.contains("eye")) {
+						loadValues(Integer.parseInt(elem.getId()));
+					} else if (classNames.contains("delete") || classNames.contains("remove")) {
+						deleteEntry(Integer.parseInt(elem.getId()));
+					}
+
+				}		
+			});
+		}
+	}
+	
+	// Native Java-Script Functions
+	
+	public static native void addEntry(String jsonString, boolean onload) /*-{
+		
+		var entries = jsonString;
+		var json = $wnd.jQuery.parseJSON(entries);
+		var bnr = json.bnr;
+        var entry = ""; 
+			
+        entry += "<tr class='selectable' id='" + bnr + "'>";
+        entry += "<td>" + json.bootname + "</td>";
+        entry += "<td>" + json.typ + "</td>";
+        entry += "<td>" + json.konstrukteur + "</td>";
+        entry += "<td>" + json.baujahr + "</td>";
+        entry += "<td>" + json.heimathafen + "</td>";
+        entry += "<td>" + json.laenge + "</td>";
+        entry += "<td>" + json.breite + "</td>";
+        entry += "<td>" + json.tiefgang + "</td>";
+        entry += "<td>" + json.eigner + "</td>";
+        entry += "<td style='width:30px; text-align:left;'>";
+        entry += "<div class='btn-group'>";
+        entry += "<a class='btn btn-small view' id='" + bnr + "'><span><i class='icon-eye-open' id='" + bnr + "'></i></span></a>";
+        entry += "<a class='btn btn-small remove' id='" + bnr + "'><span><i class='icon-remove' id='" + bnr + "'></i></span></a>";
+        entry += "</div></td>";
+        entry += "</tr>";
+
+        $wnd.$('#entries').append(entry);
+        
+        if (!onload) {	
+			$wnd.$('#dialogTitle').text('Success');
+			$wnd.$('#dialogMessage').text("Eintrag wurde erfolgreich gespeichert.");
+			$wnd.$('#messageBox').modal('show');
+        }
+		
+	}-*/;
+	
+	public static native String getValues() /*-{
+		
+		var json = {
+            "bootname": $wnd.$('#bootname').val(),
+            "typ": $wnd.$('#typ').val(),
+            "baujahr": $wnd.$('#baujahr').val(),
+	        "registernummer": $wnd.$('#registernummer').val(),
+	        "konstrukteur": $wnd.$('#konstrukteur').val(),
+	        "motor": $wnd.$('#motor').val(),
+	        "segelzeichen": $wnd.$('#segelzeichen').val(),
+	        "laenge": $wnd.$('#laenge').val(),
+	        "tankgroesse": $wnd.$('#tankgroesse').val(),
+	        "heimathafen": $wnd.$('#heimathafen').val(),
+	        "breite": $wnd.$('#breite').val(),
+	        "wassertankgroesse": $wnd.$('#wassertankgroesse').val(),
+	        "yachtclub": $wnd.$('#yachtclub').val(),
+	        "tiefgang": $wnd.$('#tiefgang').val(),
+	        "abwassertankgroesse": $wnd.$('#abwassertankgroesse').val(),
+	        "eigner": $wnd.$('#eigner').val(),
+	        "masthoehe": $wnd.$('#masthoehe').val(),
+	        "grosssegelgroesse": $wnd.$('#grosssegelgroesse').val(),
+	        "versicherung": $wnd.$('#versicherung').val(),
+	        "verdraengung": $wnd.$('#verdraengung').val(),
+	        "genuagroesse": $wnd.$('#genuagroesse').val(),
+	        "rufzeichen": $wnd.$('#rufzeichen').val(),
+	        "rigart": $wnd.$('#rigart').val(),
+	        "spigroesse": $wnd.$('#spigroesse').val()              
+	    };
+	    		
+	    return $wnd.JSON.stringify(json);
+
+	}-*/;
+	
+	public static native void deleteEntries() /*-{
+		
+		$wnd.$('#entries').remove();
+		
+	}-*/;
+	
+	public static native void deleteEntry(String bnr) /*-{
+
+		var id = bnr;
+	    var rows = $wnd.$("#entries").contents("tr");
+	    		
+		for (var i = 0; i < rows.length; i++) {
+			
+			if ($wnd.$(rows[i]).attr("id") == id) {
+				$wnd.$(rows[i]).remove();
+			}
+		}
+		
+		$wnd.$('#dialogTitle').text('Success');
+		$wnd.$('#dialogMessage').text("Eintrag wurde erfolgreich geloescht.");
+		$wnd.$('#messageBox').modal('show');
+		
+	}-*/;
+	 
+	public static native void loadValues(String jsonString) /*-{
+		
+		var entries = jsonString;
+		var json = $wnd.jQuery.parseJSON(entries);
+
+        $wnd.$('#bootname').val(json.bootname);
+        $wnd.$('#typ').val(json.typ);
+        $wnd.$('#baujahr').val(json.baujahr);
+        $wnd.$('#registernummer').val(json.registernummer);
+        $wnd.$('#konstrukteur').val(json.konstrukteur);
+        $wnd.$('#motor').val(json.motor);
+        $wnd.$('#segelzeichen').val(json.segelzeichen);
+        $wnd.$('#laenge').val(json.laenge);
+        $wnd.$('#tankgroesse').val(json.tankgroesse);
+        $wnd.$('#heimathafen').val(json.heimathafen);
+        $wnd.$('#breite').val(json.breite);
+        $wnd.$('#wassertankgroesse').val(json.wassertankgroesse);
+        $wnd.$('#yachtclub').val(json.yachtclub);
+        $wnd.$('#tiefgang').val(json.tiefgang);
+        $wnd.$('#abwassertankgroesse').val(json.abwassertankgroesse);
+        $wnd.$('#eigner').val(json.eigner);
+        $wnd.$('#masthoehe').val(json.masthoehe);
+        $wnd.$('#grosssegelgroesse').val(json.grosssegelgroesse);
+        $wnd.$('#versicherung').val(json.versicherung);
+        $wnd.$('#verdraengung').val(json.verdraengung);
+        $wnd.$('#genuagroesse').val(json.genuagroesse);
+        $wnd.$('#rufzeichen').val(json.rufzeichen);
+        $wnd.$('#rigart').val(json.rigart);
+        $wnd.$('#spigroesse').val(json.spigroesse);
+		
+	}-*/;
+	
+}
